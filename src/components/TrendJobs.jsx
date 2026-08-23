@@ -12,7 +12,7 @@ const Trends = ({ title, location }) => {
   const [jobs, setJobs] = useState([]);
   const [appliedJobIds, setAppliedJobIds] = useState(new Set());
   const [loadingJobs, setLoadingJobs] = useState(true);
-  
+
   // Apply Modal state
   const [isApplyModalOpen, setIsApplyModalOpen] = useState(false);
   const [selectedJob, setSelectedJob] = useState(null);
@@ -80,34 +80,40 @@ const Trends = ({ title, location }) => {
   });
 
   return (
-    <section id="trending-jobs" className="px-6 lg:px-20 py-16 bg-gray-50">
+    <section id="trending-jobs" className="px-6 lg:px-20 py-16 bg-slate-50">
       <div className="mb-10">
-        <h1 className="text-4xl lg:text-5xl font-bold text-gray-900">
+        <div className="inline-flex items-center gap-2 bg-violet-50 border border-violet-200 rounded-full px-3 py-1 text-xs font-bold text-violet-700 mb-4">
+          <span className="w-1.5 h-1.5 rounded-full bg-violet-500" />
+          Latest Listings
+        </div>
+        <h2 className="text-3xl lg:text-4xl font-extrabold text-slate-900">
           Trending Jobs Right Now
-        </h1>
-        <p className="mt-3 text-base lg:text-lg text-gray-500 max-w-2xl">
+        </h2>
+        <p className="mt-2 text-base text-slate-500 font-medium max-w-2xl">
           Discover the latest opportunities from companies hiring this week.
         </p>
       </div>
 
       {loadingJobs ? (
-        <div className="text-center py-10 text-gray-600">Loading jobs...</div>
+        <div className="flex justify-center py-16">
+          <div className="animate-spin rounded-full h-10 w-10 border-2 border-violet-600 border-t-transparent" />
+        </div>
       ) : filteredJobs.length === 0 ? (
-        <div className="text-center py-10 text-gray-600">No jobs found matching your search.</div>
+        <div className="text-center py-16 text-slate-500 font-medium">No jobs found matching your search.</div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5">
           {filteredJobs.map((job) => {
             const isApplied = appliedJobIds.has(job.id);
             return (
               <div
                 key={job.id}
-                className="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between"
+                className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm hover:shadow-xl hover:shadow-violet-500/10 hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between group"
               >
                 <div>
                   {/* Header */}
                   <div className="flex items-start justify-between">
                     <div className="flex gap-3">
-                      <div className="w-14 h-14 bg-gray-100 rounded-xl flex items-center justify-center overflow-hidden shrink-0">
+                      <div className="w-12 h-12 bg-violet-50 border border-violet-100 rounded-xl flex items-center justify-center overflow-hidden shrink-0">
                         {job.logo_url ? (
                           <img
                             src={job.logo_url}
@@ -115,56 +121,64 @@ const Trends = ({ title, location }) => {
                             className="w-full h-full object-cover"
                           />
                         ) : (
-                          <span className="text-lg font-bold text-green-700">
+                          <span className="text-base font-extrabold text-violet-600">
                             {job.company?.[0]}
                           </span>
                         )}
                       </div>
                       <div>
-                        <h2 className="text-base font-semibold text-gray-900">
+                        <h2 className="text-sm font-bold text-slate-800 group-hover:text-violet-700 transition-colors duration-200">
                           {job.title}
                         </h2>
-                        <p className="text-sm text-green-600 font-medium mt-1">
+                        <p className="text-xs text-violet-600 font-semibold mt-1">
                           {job.company}
                         </p>
                       </div>
                     </div>
-                    <span className="text-xs text-gray-400 font-medium">
+                    <span className="text-[10px] text-white font-bold bg-violet-500 px-2 py-0.5 rounded-full">
                       NEW
                     </span>
                   </div>
 
                   {/* Description */}
-                  <p className="mt-5 text-gray-600 leading-6 text-sm">
+                  <p className="mt-4 text-slate-500 leading-relaxed text-xs line-clamp-3">
                     {job.description}
                   </p>
                 </div>
 
                 <div>
-                  {/* Job Info */}
-                  <div className="flex justify-between border-t border-gray-200 mt-5 pt-3 text-sm text-gray-500">
-                    <span>{job.location}</span>
-                    <span>{job.salary}</span>
+                  {/* Job Info Tags */}
+                  <div className="flex flex-wrap gap-1.5 mt-4">
+                    {job.location && (
+                      <span className="text-[10px] bg-slate-100 text-slate-600 font-semibold px-2.5 py-1 rounded-lg">
+                        📍 {job.location}
+                      </span>
+                    )}
+                    {job.salary && (
+                      <span className="text-[10px] bg-emerald-50 text-emerald-700 font-semibold px-2.5 py-1 rounded-lg">
+                        💰 {job.salary}
+                      </span>
+                    )}
                   </div>
 
                   {/* Buttons */}
-                  <div className="flex gap-3 mt-5 w-full">
+                  <div className="flex gap-2 mt-4 w-full">
                     {user?.user_metadata?.role !== "company" && (
                       <button
                         onClick={() => handleApplyClick(job)}
                         disabled={isApplied}
-                        className={`flex-1 py-2.5 rounded-xl font-medium transition cursor-pointer ${
+                        className={`flex-1 py-2 rounded-xl text-xs font-bold transition cursor-pointer ${
                           isApplied
-                            ? "bg-gray-200 text-gray-600 cursor-not-allowed"
-                            : "bg-green-600 hover:bg-green-700 text-white"
+                            ? "bg-slate-100 text-slate-400 cursor-not-allowed"
+                            : "bg-violet-600 hover:bg-violet-700 text-white shadow-sm shadow-violet-500/30"
                         }`}
                       >
-                        {isApplied ? "Applied" : "Apply"}
+                        {isApplied ? "✓ Applied" : "Apply Now"}
                       </button>
                     )}
 
                     <button
-                      className={`py-2.5 border border-gray-300 rounded-xl hover:bg-gray-100 transition cursor-pointer text-center ${
+                      className={`py-2 border border-slate-200 rounded-xl hover:bg-slate-50 hover:border-violet-300 transition cursor-pointer text-center text-xs font-bold text-slate-600 ${
                         user?.user_metadata?.role === "company" ? "w-full" : "px-4"
                       }`}
                       onClick={() => navigate(`/jobs/${job.id}`)}

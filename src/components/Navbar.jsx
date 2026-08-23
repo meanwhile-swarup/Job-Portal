@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { FaBars, FaTimes } from "react-icons/fa";
+import { FaBars, FaTimes, FaBriefcase } from "react-icons/fa";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -12,10 +12,10 @@ const Navbar = () => {
     { name: "Home", path: "/" },
     { name: "Directory", path: "/people" },
     ...(user && user.user_metadata?.role === "company"
-      ? [{ name: "Employer Dashboard", path: "/company" }]
+      ? [{ name: "Dashboard", path: "/company" }]
       : user
-      ? [{ name: "Applied Jobs", path: "/applied" }]
-      : []),
+        ? [{ name: "Applied Jobs", path: "/applied" }]
+        : []),
     ...(user ? [{ name: "Profile", path: "/profile" }] : []),
   ];
 
@@ -26,42 +26,43 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="h-20 bg-white text-black flex items-center justify-between px-5 md:px-10 lg:px-16 shadow-sm sticky top-0 z-50 transition-all duration-300">
+      <nav className="h-[70px] bg-white border-b border-slate-200 flex items-center justify-between px-6 md:px-10 lg:px-16 sticky top-0 z-50">
         {/* Logo */}
-        <div className="text-2xl md:text-3xl font-bold tracking-tight cursor-pointer">
-          <h1 onClick={() => navigate("/")}>
-            Skill<span className="text-green-700">Gig:</span>
-          </h1>
+        <div
+          className="flex items-center gap-2 cursor-pointer"
+          onClick={() => navigate("/")}
+        >
+          <div className="w-8 h-8 rounded-lg bg-violet-600 flex items-center justify-center">
+            <FaBriefcase className="text-white text-sm" />
+          </div>
+          <span className="text-xl font-extrabold text-slate-900 tracking-tight">
+            Skill<span className="text-violet-600">Gig</span>
+          </span>
         </div>
 
         {/* Desktop Navigation */}
-        <div className="hidden lg:flex items-center gap-8 text-base font-medium">
-          <ul className="flex items-center gap-7">
+        <div className="hidden lg:flex items-center gap-8 text-sm font-semibold text-slate-600">
+          <ul className="flex items-center gap-6">
             {menuItems.map((item) => (
               <li key={item.name}>
                 <a
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleNavClick(item.path);
-                  }}
+                  onClick={(e) => { e.preventDefault(); handleNavClick(item.path); }}
                   href="#"
-                  className="relative transition-colors duration-300 hover:text-green-700 group"
+                  className="hover:text-violet-600 transition-colors duration-200"
                 >
                   {item.name}
-                  <span className="absolute left-0 bottom-[-6px] w-0 h-[2px] bg-green-700 transition-all duration-300 group-hover:w-full"></span>
                 </a>
               </li>
             ))}
           </ul>
 
-          {/* Desktop Auth Buttons */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
             {user ? (
               <>
-                <span className="font-semibold text-gray-700">{user?.user_metadata?.display_name || user?.email}</span>
+                <span className="text-slate-500 text-sm font-medium">{user?.user_metadata?.display_name || user?.email}</span>
                 <button
                   onClick={logout}
-                  className="rounded-full px-6 py-2.5 bg-red-600 text-white shadow-md transition-all duration-300 hover:bg-red-700 hover:shadow-lg hover:-translate-y-0.5 active:scale-95 cursor-pointer"
+                  className="rounded-lg px-5 py-2 bg-red-500 text-white text-sm font-semibold hover:bg-red-600 transition-all duration-200 cursor-pointer"
                 >
                   Logout
                 </button>
@@ -69,53 +70,43 @@ const Navbar = () => {
             ) : (
               <>
                 <button
-                  className="cursor-pointer transition-all duration-300 hover:text-green-700 hover:-translate-y-0.5"
+                  className="cursor-pointer text-slate-600 hover:text-violet-600 font-semibold transition-colors duration-200 text-sm px-3 py-2"
                   onClick={() => navigate("/auth")}
                 >
                   Login
                 </button>
                 <button
                   onClick={() => navigate("/auth")}
-                  className="rounded-full px-6 py-2.5 bg-green-700 text-white shadow-md transition-all duration-300 hover:bg-green-800 hover:shadow-lg hover:-translate-y-0.5 active:scale-95 cursor-pointer"
+                  className="rounded-lg px-5 py-2 bg-violet-600 text-white text-sm font-semibold hover:bg-violet-700 transition-all duration-200 shadow-sm shadow-violet-500/30 cursor-pointer"
                 >
-                  SignUp
+                  Sign Up
                 </button>
               </>
             )}
           </div>
         </div>
 
-        {/* Mobile Hamburger Button */}
-        <div className="lg:hidden text-2xl cursor-pointer text-gray-700 z-50" onClick={() => setIsOpen(!isOpen)}>
+        {/* Mobile Hamburger */}
+        <div className="lg:hidden text-xl cursor-pointer text-slate-700 z-50" onClick={() => setIsOpen(!isOpen)}>
           {isOpen ? <FaTimes /> : <FaBars />}
         </div>
       </nav>
 
-      {/* Mobile Drawer Overlay */}
+      {/* Mobile Overlay */}
       {isOpen && (
-        <div 
-          className="fixed inset-0 bg-black/50 z-40 lg:hidden transition-opacity duration-300"
-          onClick={() => setIsOpen(false)}
-        />
+        <div className="fixed inset-0 bg-black/40 z-40 lg:hidden" onClick={() => setIsOpen(false)} />
       )}
 
-      {/* Mobile Drawer Menu */}
-      <div 
-        className={`fixed top-0 right-0 h-full w-72 bg-white shadow-2xl z-40 lg:hidden transform transition-transform duration-300 ease-in-out ${
-          isOpen ? "translate-x-0" : "translate-x-full"
-        }`}
-      >
-        <div className="flex flex-col h-full pt-24 px-6 gap-6">
-          <ul className="flex flex-col gap-5 text-lg font-medium">
+      {/* Mobile Drawer */}
+      <div className={`fixed top-0 right-0 h-full w-72 bg-white shadow-2xl z-40 lg:hidden transform transition-transform duration-300 ease-in-out ${isOpen ? "translate-x-0" : "translate-x-full"}`}>
+        <div className="flex flex-col h-full pt-24 px-6 gap-4">
+          <ul className="flex flex-col gap-2 text-base font-semibold">
             {menuItems.map((item) => (
               <li key={item.name}>
                 <a
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleNavClick(item.path);
-                  }}
+                  onClick={(e) => { e.preventDefault(); handleNavClick(item.path); }}
                   href="#"
-                  className="block py-2 text-gray-800 hover:text-green-700 transition"
+                  className="block py-3 px-4 text-slate-700 hover:text-violet-600 hover:bg-violet-50 rounded-xl transition"
                 >
                   {item.name}
                 </a>
@@ -123,18 +114,15 @@ const Navbar = () => {
             ))}
           </ul>
 
-          <div className="border-t border-gray-100 pt-6 mt-4 flex flex-col gap-4">
+          <div className="border-t border-slate-100 pt-6 mt-2 flex flex-col gap-3">
             {user ? (
               <>
-                <div className="text-gray-600 mb-2">
-                  Logged in as: <span className="font-bold text-gray-900">{user?.user_metadata?.display_name || user?.email}</span>
+                <div className="text-slate-500 text-sm mb-1">
+                  Logged in as: <span className="font-bold text-slate-800">{user?.user_metadata?.display_name || user?.email}</span>
                 </div>
                 <button
-                  onClick={() => {
-                    setIsOpen(false);
-                    logout();
-                  }}
-                  className="w-full text-center rounded-xl py-3 bg-red-600 text-white font-medium hover:bg-red-700 transition"
+                  onClick={() => { setIsOpen(false); logout(); }}
+                  className="w-full text-center rounded-xl py-3 bg-red-500 text-white font-semibold hover:bg-red-600 transition text-sm"
                 >
                   Logout
                 </button>
@@ -143,15 +131,15 @@ const Navbar = () => {
               <>
                 <button
                   onClick={() => handleNavClick("/auth")}
-                  className="w-full text-center rounded-xl py-3 border border-gray-200 text-gray-700 font-medium hover:bg-gray-50 transition"
+                  className="w-full text-center rounded-xl py-3 border border-slate-200 text-slate-700 font-semibold hover:bg-slate-50 transition text-sm"
                 >
                   Login
                 </button>
                 <button
                   onClick={() => handleNavClick("/auth")}
-                  className="w-full text-center rounded-xl py-3 bg-green-700 text-white font-medium hover:bg-green-800 transition"
+                  className="w-full text-center rounded-xl py-3 bg-violet-600 text-white font-semibold hover:bg-violet-700 transition text-sm"
                 >
-                  SignUp
+                  Sign Up
                 </button>
               </>
             )}

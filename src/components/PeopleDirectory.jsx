@@ -68,54 +68,54 @@ const PeopleDirectory = () => {
   };
 
   return (
-    <section className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <section className="min-h-[calc(100vh-80px)] bg-slate-50/30 py-12 px-6">
       <div className="max-w-5xl mx-auto">
-        <div className="text-center mb-10">
-          <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight sm:text-5xl">
-            SkillGig <span className="text-green-700">Directory</span>
+        <div className="text-center mb-12">
+          <h1 className="text-3xl font-extrabold text-slate-800 tracking-tight sm:text-4xl">
+            SkillGig <span className="text-violet-600">Directory</span>
           </h1>
-          <p className="mt-3 max-w-2xl mx-auto text-xl text-gray-500 sm:mt-4">
+          <p className="mt-2.5 max-w-2xl mx-auto text-sm text-slate-500 leading-relaxed">
             Discover and connect with top talent and leading companies in the community.
           </p>
         </div>
 
         {/* Tab Buttons */}
-        <div className="flex justify-center mb-8">
-          <div className="bg-white p-1.5 rounded-2xl border border-gray-250 flex shadow-sm">
+        <div className="flex justify-center mb-10">
+          <div className="bg-slate-100 p-1 rounded-2xl border border-slate-200/50 flex shadow-sm w-full max-w-[320px]">
             <button
               onClick={() => setActiveTab("candidates")}
-              className={`flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition cursor-pointer text-sm ${
+              className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl font-bold transition cursor-pointer text-xs ${
                 activeTab === "candidates"
-                  ? "bg-green-700 text-white shadow-sm"
-                  : "text-gray-600 hover:text-gray-800"
+                  ? "bg-white text-slate-800 shadow-sm"
+                  : "text-slate-500 hover:text-slate-700"
               }`}
             >
-              <FaUser /> Candidates
+              <FaUser size={10} /> Candidates
             </button>
             <button
               onClick={() => setActiveTab("companies")}
-              className={`flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition cursor-pointer text-sm ${
+              className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl font-bold transition cursor-pointer text-xs ${
                 activeTab === "companies"
-                  ? "bg-green-700 text-white shadow-sm"
-                  : "text-gray-600 hover:text-gray-800"
+                  ? "bg-white text-slate-800 shadow-sm"
+                  : "text-slate-500 hover:text-slate-700"
               }`}
             >
-              <FaBriefcase /> Companies
+              <FaBriefcase size={10} /> Companies
             </button>
           </div>
         </div>
 
         {loading ? (
           <div className="flex justify-center py-20">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600"></div>
+            <div className="animate-spin rounded-full h-10 w-10 border-2 border-violet-600 border-t-transparent"></div>
           </div>
         ) : (
           <div>
             {activeTab === "candidates" ? (
               candidates.length === 0 ? (
-                <div className="bg-white border border-gray-200 rounded-3xl p-12 text-center shadow-sm">
-                  <FaUser className="mx-auto text-4xl text-gray-300 mb-4" />
-                  <p className="text-gray-500 font-medium">No candidates in the directory yet.</p>
+                <div className="bg-white border border-slate-100 rounded-3xl p-16 text-center shadow-sm">
+                  <FaUser className="mx-auto text-3xl text-slate-300 mb-4" />
+                  <p className="text-slate-500 text-sm font-medium">No candidates in the directory yet.</p>
                 </div>
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -123,26 +123,26 @@ const PeopleDirectory = () => {
                     <div
                       key={candidate.id}
                       onClick={() => navigate(`/profiles/seeker/${candidate.user_id}`)}
-                      className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-md hover:border-green-300 transition-all duration-300 flex items-start justify-between gap-4 cursor-pointer group"
+                      className="bg-white border border-slate-100 rounded-2xl p-6 shadow-sm hover:shadow-xl hover:shadow-indigo-500/5 hover:-translate-y-1 hover:border-violet-200 transition-all duration-300 flex items-start justify-between gap-4 cursor-pointer group"
                     >
                       <div className="flex items-center gap-4">
-                        <div className="w-16 h-16 rounded-2xl bg-green-50 border border-green-100 flex items-center justify-center text-xl font-bold text-green-700 shadow-sm shrink-0">
+                        <div className="w-14 h-14 rounded-xl bg-violet-50 border border-violet-100/50 flex items-center justify-center text-lg font-bold text-violet-600 shadow-sm shrink-0">
                           {getInitials(candidate.applicant_name)}
                         </div>
                         <div>
-                          <h3 className="font-bold text-gray-900 group-hover:text-green-700 transition">
+                          <h3 className="text-sm font-bold text-slate-800 group-hover:text-violet-600 transition duration-200">
                             {candidate.applicant_name}
                           </h3>
-                          <p className="text-sm text-gray-500 flex items-center gap-1.5 mt-1">
-                            <FaEnvelope className="text-gray-400" /> {candidate.applicant_email}
+                          <p className="text-xs text-slate-400 flex items-center gap-1.5 mt-1 font-semibold">
+                            <FaEnvelope className="text-slate-400 shrink-0" /> {candidate.applicant_email}
                           </p>
-                          <span className="inline-block bg-green-50 text-green-700 text-xs px-2.5 py-1 rounded-lg font-semibold mt-2.5">
+                          <span className="inline-block bg-violet-50/60 text-violet-700 text-[10px] px-2.5 py-1 rounded-md font-bold mt-3 border border-violet-100/30 uppercase tracking-wider">
                             Candidate
                           </span>
                         </div>
                       </div>
-                      <div className="text-gray-400 group-hover:text-green-700 transition self-center">
-                        <FaChevronRight size={18} />
+                      <div className="text-slate-400 group-hover:text-violet-600 transition duration-200 self-center">
+                        <FaChevronRight size={14} />
                       </div>
                     </div>
                   ))}
@@ -150,9 +150,9 @@ const PeopleDirectory = () => {
               )
             ) : (
               companies.length === 0 ? (
-                <div className="bg-white border border-gray-200 rounded-3xl p-12 text-center shadow-sm">
-                  <FaBriefcase className="mx-auto text-4xl text-gray-300 mb-4" />
-                  <p className="text-gray-500 font-medium">No companies in the directory yet.</p>
+                <div className="bg-white border border-slate-100 rounded-3xl p-16 text-center shadow-sm">
+                  <FaBriefcase className="mx-auto text-3xl text-slate-300 mb-4" />
+                  <p className="text-slate-500 text-sm font-medium">No companies in the directory yet.</p>
                 </div>
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -160,10 +160,10 @@ const PeopleDirectory = () => {
                     <div
                       key={company.id}
                       onClick={() => navigate(`/profiles/company/${company.company_id}`)}
-                      className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-md hover:border-green-300 transition-all duration-300 flex items-start justify-between gap-4 cursor-pointer group"
+                      className="bg-white border border-slate-100 rounded-2xl p-6 shadow-sm hover:shadow-xl hover:shadow-violet-500/5 hover:-translate-y-1 hover:border-violet-200 transition-all duration-300 flex items-start justify-between gap-4 cursor-pointer group"
                     >
                       <div className="flex items-center gap-4">
-                        <div className="w-16 h-16 rounded-2xl bg-purple-50 border border-purple-100 flex items-center justify-center text-xl font-bold text-purple-700 shadow-sm shrink-0 overflow-hidden">
+                        <div className="w-14 h-14 rounded-xl bg-violet-50 border border-violet-100/50 flex items-center justify-center text-lg font-bold text-violet-600 shadow-sm shrink-0 overflow-hidden">
                           {company.logo_url ? (
                             <img
                               src={company.logo_url}
@@ -176,21 +176,21 @@ const PeopleDirectory = () => {
                           )}
                         </div>
                         <div>
-                          <h3 className="font-bold text-gray-900 group-hover:text-purple-700 transition">
+                          <h3 className="text-sm font-bold text-slate-800 group-hover:text-violet-600 transition duration-200">
                             {company.company}
                           </h3>
                           {company.location && (
-                            <p className="text-sm text-gray-500 flex items-center gap-1.5 mt-1">
-                              <FaMapMarkerAlt className="text-gray-400" /> {company.location}
+                            <p className="text-xs text-slate-400 flex items-center gap-1.5 mt-1 font-semibold">
+                              <FaMapMarkerAlt className="text-slate-400 shrink-0" /> {company.location}
                             </p>
                           )}
-                          <span className="inline-block bg-purple-50 text-purple-700 text-xs px-2.5 py-1 rounded-lg font-semibold mt-2.5">
+                          <span className="inline-block bg-violet-50/60 text-violet-700 text-[10px] px-2.5 py-1 rounded-md font-bold mt-3 border border-violet-100/30 uppercase tracking-wider">
                             Employer
                           </span>
                         </div>
                       </div>
-                      <div className="text-gray-400 group-hover:text-purple-700 transition self-center">
-                        <FaChevronRight size={18} />
+                      <div className="text-slate-400 group-hover:text-violet-600 transition duration-200 self-center">
+                        <FaChevronRight size={14} />
                       </div>
                     </div>
                   ))}

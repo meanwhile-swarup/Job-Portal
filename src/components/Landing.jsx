@@ -1,152 +1,114 @@
-import {React} from 'react'
+import { React } from 'react'
 import jobguy from '../assets/jobguy.png'
+import { FiMapPin, FiSearch, FiArrowRight } from 'react-icons/fi'
+import { FaBriefcase, FaUsers } from 'react-icons/fa'
 
-const Landing = ({setLocation, setTitle, title, location}) => {
+const Landing = ({ setLocation, setTitle, title, location }) => {
 
-  
+  const scrollToJobs = () => {
+    const element = document.getElementById("trending-jobs");
+    if (element) element.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
-    <div className='min-h-96 mt-3 px-5 md:px-10 lg:px-28 w-full flex flex-col lg:flex-row justify-between items-center rounded-2xl bg-gradient-to-br from-white via-green-50 to-white shadow-md overflow-hidden relative'>
+    <div className="relative overflow-hidden bg-white">
+      {/* Background blobs */}
+      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-violet-100 rounded-full blur-3xl opacity-40 -translate-y-32 translate-x-32 pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-indigo-100 rounded-full blur-3xl opacity-30 translate-y-20 -translate-x-20 pointer-events-none" />
 
+      <div className="relative max-w-7xl mx-auto px-6 md:px-10 lg:px-16 pt-16 pb-12 flex flex-col lg:flex-row items-center gap-12 lg:gap-6">
 
-      {/* Left Content */}
-      <div className='flex flex-col items-center gap-3 z-10 text-center lg:text-left'>
-
-
-        <p className='text-sm md:text-base text-gray-500 font-medium'>
-          One platform. Endless opportunities.
-        </p>
-
-
-        <h2 className='text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-gray-900'>
-          Find Work That <span className='text-green-600'>Fits</span> You.
-        </h2>
-
-
-        <p className='text-base md:text-lg text-gray-500 max-w-xl'>
-          Explore careers, build connections, and grow with companies hiring across Nepal.
-        </p>
-
-
-
-        <div className='flex flex-col sm:flex-row mt-3 rounded-xl overflow-hidden border border-gray-200 bg-white shadow-sm w-full max-w-3xl'>
-
-
-          <input
-            className='px-5 py-3 flex-1 outline-none border-b sm:border-b-0 sm:border-r border-gray-200'
-            placeholder='Job Title'
-            value={title}
-            onChange={(e)=>{setTitle(e.target.value)}}
-            
-          />
-
-
-          <input
-            className='px-5 py-3 flex-1 outline-none'
-            placeholder='Location'
-            value={location}
-            onChange={(e)=>{setLocation(e.target.value)}}
-          />
-
-
-          <button className='m-2 px-7 py-2.5 rounded-lg bg-green-600 text-white font-semibold hover:bg-green-700 transition cursor-pointer'
-          onClick={()=>{
-            const element = document.getElementById("trending-jobs");
-            if (element) {
-              element.scrollIntoView({ behavior: "smooth" });
-            }
-          }}
-          >
-            Search
-          </button>
-
-
-        </div>
-
-
-      </div>
-
-
-
-
-
-      {/* Right Visual */}
-      <div className='relative h-72 md:h-88 w-full lg:w-[450px] flex items-center justify-center mt-6 lg:mt-0'>
-
-
-        {/* Glow */}
-        <div className='absolute w-56 md:w-72 h-56 md:h-72 bg-green-200 rounded-full blur-3xl opacity-40'></div>
-
-
-
-        {/* Card 1 */}
-        <div className='hidden sm:block absolute left-0 top-8 md:top-16 bg-white/90 backdrop-blur-md rounded-2xl shadow-lg px-4 py-3 border border-gray-100 z-0'>
-
-
-          <p className='text-xs md:text-sm text-gray-500'>
-            New Match
-          </p>
-
-
-          <p className='text-sm md:text-base font-semibold text-gray-900'>
-            Frontend Developer
-          </p>
-
-
-          <div className='mt-2 flex gap-2'>
-
-            <span className='text-xs bg-green-100 text-green-700 px-3 py-1 rounded-full'>
-              React
-            </span>
-
-
-            <span className='text-xs bg-gray-100 text-gray-600 px-3 py-1 rounded-full'>
-              Remote
-            </span>
-
+        {/* Left Content */}
+        <div className="flex-1 flex flex-col items-start text-left max-w-xl">
+          {/* Badge */}
+          <div className="inline-flex items-center gap-2 bg-violet-50 border border-violet-200 rounded-full px-4 py-1.5 text-sm font-semibold text-violet-700 mb-6">
+            <span className="w-2 h-2 rounded-full bg-violet-500 animate-pulse" />
+            500+ Jobs Available Now
           </div>
 
+          <h1 className="text-5xl sm:text-6xl font-extrabold tracking-tight text-slate-900 leading-[1.1]">
+            Find Work That <br/>
+            <span className="text-violet-600">Fits You.</span>
+          </h1>
 
+          <p className="mt-5 text-lg text-slate-500 leading-relaxed font-medium">
+            Explore careers, build connections, and grow with companies hiring across Nepal.
+          </p>
+
+          {/* Search Bar */}
+          <div className="mt-8 flex flex-col sm:flex-row bg-white rounded-2xl border border-slate-200 shadow-lg shadow-slate-200/60 overflow-hidden w-full max-w-2xl">
+            <div className="flex items-center gap-3 px-5 py-4 flex-1 border-b sm:border-b-0 sm:border-r border-slate-100">
+              <FiSearch className="text-slate-400 shrink-0 text-lg" />
+              <input
+                className="flex-1 outline-none text-slate-800 placeholder:text-slate-400 font-medium text-sm bg-transparent"
+                placeholder="Job title or keyword"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+              />
+            </div>
+            <div className="flex items-center gap-3 px-5 py-4 flex-1 border-b sm:border-b-0 border-slate-100">
+              <FiMapPin className="text-slate-400 shrink-0 text-lg" />
+              <input
+                className="flex-1 outline-none text-slate-800 placeholder:text-slate-400 font-medium text-sm bg-transparent"
+                placeholder="Location"
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
+              />
+            </div>
+            <button
+              className="m-2 px-7 py-3 rounded-xl bg-violet-600 text-white font-bold text-sm hover:bg-violet-700 transition-all duration-200 shadow-sm shadow-violet-500/30 flex items-center gap-2 justify-center cursor-pointer"
+              onClick={scrollToJobs}
+            >
+              Search <FiArrowRight />
+            </button>
+          </div>
+
+          {/* Trust Row */}
+          <div className="mt-6 flex items-center gap-6 text-sm text-slate-400 font-medium">
+            <div className="flex items-center gap-1.5">
+              <FaBriefcase className="text-violet-400" />
+              <span>1-Click Apply</span>
+            </div>
+            <div className="w-1 h-1 rounded-full bg-slate-300" />
+            <div className="flex items-center gap-1.5">
+              <FaUsers className="text-violet-400" />
+              <span>1000+ Candidates</span>
+            </div>
+            <div className="w-1 h-1 rounded-full bg-slate-300" />
+            <span>100% Free</span>
+          </div>
         </div>
 
+        {/* Right Visual */}
+        <div className="relative flex-1 flex items-center justify-center min-h-[380px] w-full">
+          {/* Glow */}
+          <div className="absolute w-72 h-72 bg-violet-200 rounded-full blur-3xl opacity-50" />
 
+          {/* Floating Card 1 - Top Left */}
+          <div className="hidden sm:block absolute left-0 top-10 bg-white rounded-2xl shadow-xl shadow-slate-200/60 border border-slate-100 px-4 py-3 z-10 min-w-[160px]">
+            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">New Match</p>
+            <p className="text-sm font-extrabold text-slate-800 mt-1">Frontend Developer</p>
+            <div className="flex gap-1.5 mt-2">
+              <span className="text-[10px] bg-violet-100 text-violet-700 px-2.5 py-0.5 rounded-full font-bold">React</span>
+              <span className="text-[10px] bg-slate-100 text-slate-600 px-2.5 py-0.5 rounded-full font-bold">Remote</span>
+            </div>
+          </div>
 
+          {/* Floating Card 2 - Bottom Right */}
+          <div className="hidden sm:block absolute right-0 bottom-12 bg-white rounded-2xl shadow-xl shadow-slate-200/60 border border-slate-100 px-4 py-3 z-10">
+            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Hiring Now</p>
+            <p className="text-2xl font-extrabold text-slate-900 mt-0.5">500+</p>
+            <p className="text-xs text-slate-400 font-semibold">Open Positions</p>
+          </div>
 
-
-        {/* Card 2 */}
-        <div className='hidden sm:block absolute right-0 bottom-8 md:bottom-16 bg-white/90 backdrop-blur-md rounded-2xl shadow-lg px-4 py-3 border border-gray-100 z-0'>
-
-
-          <p className='text-xs md:text-sm text-gray-500'>
-            Hiring Now
-          </p>
-
-
-          <p className='text-xl md:text-2xl font-bold text-gray-900'>
-            500+
-          </p>
-
-
-          <p className='text-xs md:text-sm text-gray-500'>
-            Open Positions
-          </p>
-
-
+          {/* Person Image */}
+          <img
+            src={jobguy}
+            className="relative h-[360px] max-w-[85%] object-contain z-10 drop-shadow-2xl"
+          />
         </div>
-
-
-
-
-
-        {/* Person */}
-        <img
-          src={jobguy}
-          className='h-full max-w-[85%] object-contain relative z-10 drop-shadow-xl hover:scale-105 transition duration-500'
-        />
-
 
       </div>
-
-
     </div>
   )
 }

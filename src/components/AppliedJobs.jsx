@@ -60,25 +60,25 @@ const AppliedJobs = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <p className="text-gray-600 text-lg">Loading applications...</p>
+      <div className="min-h-[calc(100vh-80px)] flex items-center justify-center bg-slate-50/50">
+        <p className="text-slate-500 font-medium animate-pulse">Loading applications...</p>
       </div>
     );
   }
 
   return (
-    <section className="min-h-screen bg-gray-50 px-6 lg:px-20 py-16">
+    <section className="min-h-[calc(100vh-80px)] bg-slate-50/30 px-6 lg:px-24 py-16">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold text-gray-900 mb-8">Your Applications</h1>
+        <h1 className="text-2xl font-extrabold text-slate-800 mb-8">Your Applications</h1>
 
         {appliedJobs.length === 0 ? (
-          <div className="bg-white border border-gray-200 rounded-2xl p-8 text-center shadow-sm">
-            <p className="text-gray-500 text-lg mb-4">You haven't applied for any jobs yet.</p>
+          <div className="bg-white border border-slate-100 rounded-3xl p-10 text-center shadow-sm">
+            <p className="text-slate-500 text-base mb-6 font-medium">You haven't applied for any jobs yet.</p>
             <button
               onClick={() => navigate("/")}
-              className="bg-green-600 hover:bg-green-700 text-white px-6 py-2.5 rounded-xl font-medium transition cursor-pointer"
+              className="bg-violet-600 hover:bg-violet-700 text-white px-6 py-3 rounded-xl text-xs font-bold shadow-md hover:shadow-lg transition cursor-pointer"
             >
-              Browse Jobs
+              Browse Open Jobs
             </button>
           </div>
         ) : (
@@ -86,10 +86,10 @@ const AppliedJobs = () => {
             {appliedJobs.map((job) => (
               <div
                 key={job.id}
-                className="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
+                className="bg-white border border-slate-100 rounded-2xl p-5 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
               >
                 <div className="flex items-center gap-4">
-                  <div className="w-14 h-14 bg-gray-100 rounded-xl flex items-center justify-center overflow-hidden shrink-0">
+                  <div className="w-12 h-12 bg-violet-50 rounded-xl flex items-center justify-center overflow-hidden shrink-0 border border-violet-100/50">
                     {job.logo_url ? (
                       <img
                         src={job.logo_url}
@@ -97,15 +97,15 @@ const AppliedJobs = () => {
                         className="w-full h-full object-cover"
                       />
                     ) : (
-                      <span className="text-lg font-bold text-green-700">
+                      <span className="text-base font-black text-violet-600">
                         {job.company?.[0]}
                       </span>
                     )}
                   </div>
                   <div>
-                    <h2 className="text-lg font-semibold text-gray-900">{job.title}</h2>
-                    <p className="text-sm text-green-600 font-medium">{job.company}</p>
-                    <div className="flex gap-4 mt-1 text-xs text-gray-400">
+                    <h2 className="text-sm font-bold text-slate-800">{job.title}</h2>
+                    <p className="text-xs text-violet-600 font-semibold mt-0.5">{job.company}</p>
+                    <div className="flex gap-3 mt-1.5 text-[10px] text-slate-400 font-semibold">
                       <span>{job.location}</span>
                       <span>•</span>
                       <span>Applied on {job.appliedAt}</span>
@@ -113,21 +113,21 @@ const AppliedJobs = () => {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-3 w-full sm:w-auto">
+                <div className="flex items-center gap-3 w-full sm:w-auto shrink-0 justify-between sm:justify-start">
                   <span
-                    className={`text-xs px-3 py-1.5 rounded-full font-medium ${
+                    className={`text-[10px] px-2.5 py-1 rounded-md font-bold uppercase tracking-wider ${
                       job.status === "Accepted"
-                        ? "bg-green-100 text-green-700"
+                        ? "bg-accent-50 text-accent-700 border border-accent-100/30"
                         : job.status === "Rejected"
-                        ? "bg-red-100 text-red-700"
-                        : "bg-yellow-100 text-yellow-700"
+                        ? "bg-red-50 text-red-700 border border-red-100/30"
+                        : "bg-amber-50 text-amber-700 border border-amber-100/30"
                     }`}
                   >
                     {job.status}
                   </span>
                   <button
                     onClick={() => navigate(`/jobs/${job.id}`)}
-                    className="flex-1 sm:flex-initial text-center px-4 py-2 border border-gray-300 rounded-xl text-sm font-medium hover:bg-gray-100 transition cursor-pointer"
+                    className="text-center px-4 py-2 border border-slate-200 text-slate-700 rounded-xl text-xs font-bold hover:bg-slate-50 transition cursor-pointer duration-200"
                   >
                     View Details
                   </button>
