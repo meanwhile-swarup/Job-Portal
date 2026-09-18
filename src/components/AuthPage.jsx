@@ -42,17 +42,18 @@ export default function AuthPage() {
       errors.push("Name is required.");
     }
 
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!formData.email.trim()) {
       errors.push("Email is required");
-    } else if (!formData.email.includes("@")) {
-      errors.push("Please enter a valid email address");
+    } else if (!emailRegex.test(formData.email.trim())) {
+      errors.push("Please enter a valid email address (e.g. name@domain.com)");
     }
 
     if (!isForgotPassword) {
       if (!formData.password) {
         errors.push("Password is required");
       } else if (formData.password.length < 6) {
-        errors.push("Password must have more than 6 characters");
+        errors.push("Password must be at least 6 characters");
       }
     }
 
