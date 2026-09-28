@@ -36,27 +36,27 @@ const Landing = ({ setLocation, setTitle, title, location }) => {
           </p>
 
           {/* Search Bar */}
-          <div className="mt-8 flex flex-col sm:flex-row bg-white rounded-2xl border border-slate-200 shadow-lg shadow-slate-200/60 overflow-hidden w-full max-w-2xl">
-            <div className="flex items-center gap-3 px-5 py-4 flex-1 border-b sm:border-b-0 sm:border-r border-slate-100">
-              <FiSearch className="text-slate-400 shrink-0 text-lg" />
+          <div className="mt-8 flex flex-col sm:flex-row items-center bg-white rounded-2xl border border-slate-200 shadow-lg shadow-slate-200/60 overflow-hidden w-full p-2 gap-2">
+            <div className="flex items-center gap-2.5 px-4 py-2.5 flex-1 w-full min-w-0 border-b sm:border-b-0 sm:border-r border-slate-100">
+              <FiSearch className="text-slate-400 shrink-0 text-base" />
               <input
-                className="flex-1 outline-none text-slate-800 placeholder:text-slate-400 font-medium text-sm bg-transparent"
+                className="w-full min-w-0 outline-none text-slate-800 placeholder:text-slate-400 font-medium text-sm bg-transparent"
                 placeholder="Job title or keyword"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
               />
             </div>
-            <div className="flex items-center gap-3 px-5 py-4 flex-1 border-b sm:border-b-0 border-slate-100">
-              <FiMapPin className="text-slate-400 shrink-0 text-lg" />
+            <div className="flex items-center gap-2.5 px-4 py-2.5 flex-1 w-full min-w-0">
+              <FiMapPin className="text-slate-400 shrink-0 text-base" />
               <input
-                className="flex-1 outline-none text-slate-800 placeholder:text-slate-400 font-medium text-sm bg-transparent"
+                className="w-full min-w-0 outline-none text-slate-800 placeholder:text-slate-400 font-medium text-sm bg-transparent"
                 placeholder="Location"
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
               />
             </div>
             <button
-              className="m-2 px-7 py-3 rounded-xl bg-violet-600 text-white font-bold text-sm hover:bg-violet-700 transition-all duration-200 shadow-sm shadow-violet-500/30 flex items-center gap-2 justify-center cursor-pointer"
+              className="w-full sm:w-auto px-6 py-3 rounded-xl bg-violet-600 text-white font-bold text-sm hover:bg-violet-700 transition-all duration-200 shadow-sm shadow-violet-500/30 flex items-center gap-2 justify-center cursor-pointer shrink-0 whitespace-nowrap"
               onClick={scrollToJobs}
             >
               Search <FiArrowRight />

@@ -22,16 +22,16 @@ const Statistics = () => {
             return (
               <div
                 key={i}
-                className={`flex flex-col items-center lg:items-start text-center lg:text-left py-2 ${
-                  i < 3 ? 'lg:border-r lg:border-white/20 lg:pr-12' : ''
-                } ${i > 0 ? 'lg:pl-12' : ''}`}
+                className={`flex flex-col items-center text-center py-2 ${
+                  i < 3 ? 'lg:border-r lg:border-white/20' : ''
+                } px-4`}
               >
-                <div className="w-10 h-10 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center mb-3">
-                  <Icon className="text-white text-lg" />
+                <div className="w-11 h-11 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center mb-3 shadow-inner">
+                  <Icon className="text-white text-xl" />
                 </div>
                 <p className="text-3xl font-extrabold tracking-tight">{stat.number}</p>
-                <p className="text-white font-bold mt-0.5 text-sm">{stat.label}</p>
-                <p className="text-white/60 text-xs font-medium mt-0.5">{stat.sub}</p>
+                <p className="text-white font-bold mt-1 text-sm">{stat.label}</p>
+                <p className="text-white/70 text-xs font-medium mt-0.5">{stat.sub}</p>
               </div>
             )
           })}
