@@ -10,7 +10,6 @@ const Navbar = () => {
 
   const menuItems = [
     { name: "Home", path: "/" },
-    { name: "Directory", path: "/people" },
     ...(user && user.user_metadata?.role === "company"
       ? [{ name: "Dashboard", path: "/company" }]
       : user

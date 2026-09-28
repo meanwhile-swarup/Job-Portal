@@ -14,7 +14,6 @@ import Footer from './components/Footer'
 import NotFound from './components/NotFound'
 import ProtectedRoute from './components/ProtectedRoute'
 import Profile from './components/Profile'
-import PeopleDirectory from './components/PeopleDirectory'
 import PublicProfile from './components/PublicProfile'
 
 
@@ -72,8 +71,6 @@ const App = () => {
               <Profile />
             </ProtectedRoute>
           } />
-          
-          <Route path="/people" element={<PeopleDirectory />} />
           
           <Route path="/profiles/seeker/:id" element={
             <ProtectedRoute>
