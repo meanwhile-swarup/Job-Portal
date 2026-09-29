@@ -73,6 +73,21 @@ const Trends = ({ title, location }) => {
     });
   };
 
+  const formatTimeAgo = (dateString) => {
+    if (!dateString) return "Recently";
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffInSeconds = Math.floor((now - date) / 1000);
+    if (diffInSeconds < 60) return "Just now";
+    const diffInMinutes = Math.floor(diffInSeconds / 60);
+    if (diffInMinutes < 60) return `${diffInMinutes}m ago`;
+    const diffInHours = Math.floor(diffInMinutes / 60);
+    if (diffInHours < 24) return `${diffInHours}h ago`;
+    const diffInDays = Math.floor(diffInHours / 24);
+    if (diffInDays < 30) return `${diffInDays}d ago`;
+    return date.toLocaleDateString(undefined, { month: "short", day: "numeric" });
+  };
+
   const filteredJobs = jobs.filter((job) => {
     const titleMatch = (job.title || "").toLowerCase().includes(title.toLowerCase());
     const locationMatch = (job.location || "").toLowerCase().includes(location.toLowerCase());
@@ -80,40 +95,54 @@ const Trends = ({ title, location }) => {
   });
 
   return (
-    <section id="trending-jobs" className="px-6 lg:px-20 py-16 bg-slate-50">
-      <div className="mb-10">
-        <div className="inline-flex items-center gap-2 bg-violet-50 border border-violet-200 rounded-full px-3 py-1 text-xs font-bold text-violet-700 mb-4">
-          <span className="w-1.5 h-1.5 rounded-full bg-violet-500" />
-          Latest Listings
+    <section id="trending-jobs" className="px-6 lg:px-20 py-16 bg-slate-50/60">
+      <div className="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div>
+          <div className="inline-flex items-center gap-2 bg-violet-100/80 border border-violet-200/80 rounded-full px-3 py-1 text-xs font-semibold text-violet-700 mb-3">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-violet-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-violet-600"></span>
+            </span>
+            Hot Opportunities
+          </div>
+          <h2 className="text-3xl lg:text-4xl font-black text-slate-900 tracking-tight">
+            Trending Jobs Right Now
+          </h2>
+          <p className="mt-2 text-sm lg:text-base text-slate-600 font-normal max-w-xl">
+            Discover top-tier career opportunities curated from actively hiring tech & modern companies.
+          </p>
         </div>
-        <h2 className="text-3xl lg:text-4xl font-extrabold text-slate-900">
-          Trending Jobs Right Now
-        </h2>
-        <p className="mt-2 text-base text-slate-500 font-medium max-w-2xl">
-          Discover the latest opportunities from companies hiring this week.
-        </p>
       </div>
 
       {loadingJobs ? (
-        <div className="flex justify-center py-16">
-          <div className="animate-spin rounded-full h-10 w-10 border-2 border-violet-600 border-t-transparent" />
+        <div className="flex flex-col items-center justify-center py-20 gap-3">
+          <div className="animate-spin rounded-full h-10 w-10 border-3 border-violet-600 border-t-transparent" />
+          <span className="text-sm font-medium text-slate-500">Fetching latest jobs...</span>
         </div>
       ) : filteredJobs.length === 0 ? (
-        <div className="text-center py-16 text-slate-500 font-medium">No jobs found matching your search.</div>
+        <div className="text-center py-20 bg-white border border-slate-200/60 rounded-2xl shadow-sm text-slate-500 font-medium max-w-md mx-auto">
+          <svg className="w-12 h-12 mx-auto text-slate-300 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+          No matching jobs found. Try adjusting your filters.
+        </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
           {filteredJobs.map((job) => {
             const isApplied = appliedJobIds.has(job.id);
             return (
               <div
                 key={job.id}
-                className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm hover:shadow-xl hover:shadow-violet-500/10 hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between group"
+                className="relative bg-white border border-slate-200/80 rounded-2xl p-5 shadow-sm hover:shadow-xl hover:shadow-violet-500/10 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group overflow-hidden"
               >
+                {/* Top Accent Line on Hover */}
+                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-violet-600 via-indigo-500 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
                 <div>
-                  {/* Header */}
-                  <div className="flex items-start justify-between">
-                    <div className="flex gap-3">
-                      <div className="w-12 h-12 bg-violet-50 border border-violet-100 rounded-xl flex items-center justify-center overflow-hidden shrink-0">
+                  {/* Card Header: Logo & Badge */}
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex items-center gap-3">
+                      <div className="w-12 h-12 bg-slate-50 border border-slate-100 rounded-xl flex items-center justify-center overflow-hidden shrink-0 shadow-inner group-hover:border-violet-200 transition-colors">
                         {job.logo_url ? (
                           <img
                             src={job.logo_url}
@@ -121,69 +150,100 @@ const Trends = ({ title, location }) => {
                             className="w-full h-full object-cover"
                           />
                         ) : (
-                          <span className="text-base font-extrabold text-violet-600">
-                            {job.company?.[0]}
+                          <span className="text-lg font-black text-violet-700 bg-gradient-to-br from-violet-100 to-indigo-100 w-full h-full flex items-center justify-center">
+                            {job.company?.[0]?.toUpperCase() || "J"}
                           </span>
                         )}
                       </div>
-                      <div>
-                        <h2 className="text-sm font-bold text-slate-800 group-hover:text-violet-700 transition-colors duration-200">
-                          {job.title}
-                        </h2>
-                        <p className="text-xs text-violet-600 font-semibold mt-1">
+                      <div className="min-w-0 flex-1">
+                        <span className="text-[11px] font-semibold tracking-wide text-violet-600 uppercase block truncate">
                           {job.company}
-                        </p>
+                        </span>
+                        <h3 className="text-base font-bold text-slate-900 group-hover:text-violet-600 transition-colors leading-snug line-clamp-1 mt-0.5">
+                          {job.title}
+                        </h3>
                       </div>
                     </div>
-                    <span className="text-[10px] text-white font-bold bg-violet-500 px-2 py-0.5 rounded-full">
-                      NEW
+                    <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200/70 px-2.5 py-0.5 rounded-full shrink-0">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                      Active
                     </span>
                   </div>
 
-                  {/* Description */}
-                  <p className="mt-4 text-slate-500 leading-relaxed text-xs line-clamp-3">
-                    {job.description}
+                  {/* Job Description */}
+                  <p className="mt-3.5 text-xs text-slate-500 leading-relaxed line-clamp-2 font-normal">
+                    {job.description || "No description provided."}
                   </p>
                 </div>
 
-                <div>
-                  {/* Job Info Tags */}
-                  <div className="flex flex-wrap gap-1.5 mt-4">
+                {/* Footer section: Tags & Action Buttons */}
+                <div className="mt-5 pt-4 border-t border-slate-100">
+                  {/* Info Tags */}
+                  <div className="flex flex-wrap gap-2 mb-4">
                     {job.location && (
-                      <span className="text-[10px] bg-slate-100 text-slate-600 font-semibold px-2.5 py-1 rounded-lg">
-                        📍 {job.location}
+                      <span className="inline-flex items-center gap-1.5 text-[11px] font-medium bg-slate-100/80 text-slate-600 px-2.5 py-1 rounded-lg border border-slate-200/50">
+                        <svg className="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                        {job.location}
                       </span>
                     )}
+
                     {job.salary && (
-                      <span className="text-[10px] bg-emerald-50 text-emerald-700 font-semibold px-2.5 py-1 rounded-lg">
-                        💰 {job.salary}
+                      <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold bg-emerald-50 text-emerald-700 px-2.5 py-1 rounded-lg border border-emerald-200/60">
+                        <svg className="w-3.5 h-3.5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        {job.salary}
+                      </span>
+                    )}
+
+                    {job.posted_at && (
+                      <span className="inline-flex items-center gap-1.5 text-[11px] font-medium bg-violet-50/70 text-violet-700 px-2.5 py-1 rounded-lg border border-violet-100">
+                        <svg className="w-3.5 h-3.5 text-violet-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        {formatTimeAgo(job.posted_at)}
                       </span>
                     )}
                   </div>
 
                   {/* Buttons */}
-                  <div className="flex gap-2 mt-4 w-full">
+                  <div className="flex gap-2.5 items-center w-full">
                     {user?.user_metadata?.role !== "company" && (
                       <button
                         onClick={() => handleApplyClick(job)}
                         disabled={isApplied}
-                        className={`flex-1 py-2 rounded-xl text-xs font-bold transition cursor-pointer ${
+                        className={`flex-1 py-2.5 px-3 rounded-xl text-xs font-semibold transition-all duration-200 flex items-center justify-center gap-1.5 cursor-pointer ${
                           isApplied
-                            ? "bg-slate-100 text-slate-400 cursor-not-allowed"
-                            : "bg-violet-600 hover:bg-violet-700 text-white shadow-sm shadow-violet-500/30"
+                            ? "bg-slate-100 text-slate-400 border border-slate-200/60 cursor-not-allowed"
+                            : "bg-slate-900 hover:bg-violet-600 text-white shadow-sm hover:shadow-md hover:shadow-violet-500/20 active:scale-[0.98]"
                         }`}
                       >
-                        {isApplied ? "✓ Applied" : "Apply Now"}
+                        {isApplied ? (
+                          <>
+                            <svg className="w-3.5 h-3.5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" />
+                            </svg>
+                            Applied
+                          </>
+                        ) : (
+                          "Apply Now"
+                        )}
                       </button>
                     )}
 
                     <button
-                      className={`py-2 border border-slate-200 rounded-xl hover:bg-slate-50 hover:border-violet-300 transition cursor-pointer text-center text-xs font-bold text-slate-600 ${
-                        user?.user_metadata?.role === "company" ? "w-full" : "px-4"
+                      className={`py-2.5 px-3 border border-slate-200/80 rounded-xl hover:bg-slate-50 hover:border-slate-300 hover:text-slate-900 transition-all cursor-pointer text-center text-xs font-semibold text-slate-600 flex items-center justify-center gap-1 group/btn ${
+                        user?.user_metadata?.role === "company" ? "w-full" : ""
                       }`}
                       onClick={() => navigate(`/jobs/${job.id}`)}
                     >
                       Details
+                      <svg className="w-3.5 h-3.5 transition-transform duration-200 group-hover/btn:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+                      </svg>
                     </button>
                   </div>
                 </div>
