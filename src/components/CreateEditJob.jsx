@@ -121,81 +121,81 @@ const CreateEditJob = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <p className="text-gray-600 text-lg">Loading details...</p>
+      <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
+        <p className="text-slate-600 dark:text-slate-400 text-lg">Loading details...</p>
       </div>
     );
   }
 
   return (
-    <section className="min-h-screen bg-gray-50 px-6 lg:px-20 py-16">
-      <div className="max-w-2xl mx-auto bg-white border border-gray-200 rounded-3xl shadow-sm p-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">
+    <section className="min-h-screen bg-slate-50 dark:bg-slate-950 px-6 lg:px-20 py-16 transition-colors duration-300">
+      <div className="max-w-2xl mx-auto bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl shadow-sm p-8">
+        <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">
           {isEditMode ? "Edit Job Posting" : "Post a New Job"}
         </h1>
-        <p className="text-gray-500 mb-8">
+        <p className="text-slate-500 dark:text-slate-400 mb-8">
           Fill in the details to publish a new job opening on SkillGig.
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">Job Title *</label>
+              <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Job Title *</label>
               <input
                 type="text"
                 name="title"
                 value={formData.title}
                 onChange={handleChange}
                 placeholder="e.g. Senior React Developer"
-                className="w-full border rounded-xl py-3 px-4 outline-none focus:ring-2 focus:ring-green-500"
+                className="w-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 rounded-xl py-3 px-4 outline-none focus:ring-2 focus:ring-emerald-500"
               />
             </div>
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">Company Name *</label>
+              <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Company Name *</label>
               <input
                 type="text"
                 name="company"
                 value={formData.company}
                 onChange={handleChange}
                 placeholder="e.g. Yarsa Tech"
-                className="w-full border rounded-xl py-3 px-4 outline-none focus:ring-2 focus:ring-green-500"
+                className="w-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 rounded-xl py-3 px-4 outline-none focus:ring-2 focus:ring-emerald-500"
               />
             </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">Location</label>
+              <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Location</label>
               <input
                 type="text"
                 name="location"
                 value={formData.location}
                 onChange={handleChange}
                 placeholder="e.g. Kathmandu or Remote"
-                className="w-full border rounded-xl py-3 px-4 outline-none focus:ring-2 focus:ring-green-500"
+                className="w-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 rounded-xl py-3 px-4 outline-none focus:ring-2 focus:ring-emerald-500"
               />
             </div>
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">Salary Range</label>
+              <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Salary Range</label>
               <input
                 type="text"
                 name="salary"
                 value={formData.salary}
                 onChange={handleChange}
                 placeholder="e.g. Rs. 80,000 - 120,000"
-                className="w-full border rounded-xl py-3 px-4 outline-none focus:ring-2 focus:ring-green-500"
+                className="w-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 rounded-xl py-3 px-4 outline-none focus:ring-2 focus:ring-emerald-500"
               />
             </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">Category</label>
+              <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Category</label>
               <select
                 name="category"
                 value={formData.category}
                 onChange={handleChange}
-                className="w-full border rounded-xl py-3 px-4 bg-white outline-none focus:ring-2 focus:ring-green-500"
+                className="w-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white rounded-xl py-3 px-4 outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer"
               >
                 <option value="Development">Development</option>
                 <option value="Design">Design</option>
@@ -208,12 +208,12 @@ const CreateEditJob = () => {
               </select>
             </div>
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">Employment Type</label>
+              <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Employment Type</label>
               <select
                 name="employment_type"
                 value={formData.employment_type}
                 onChange={handleChange}
-                className="w-full border rounded-xl py-3 px-4 bg-white outline-none focus:ring-2 focus:ring-green-500"
+                className="w-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white rounded-xl py-3 px-4 outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer"
               >
                 <option value="Full-time">Full-time</option>
                 <option value="Part-time">Part-time</option>
@@ -224,53 +224,53 @@ const CreateEditJob = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">Company Logo URL</label>
+            <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Company Logo URL</label>
             <input
               type="text"
               name="logo_url"
               value={formData.logo_url}
               onChange={handleChange}
               placeholder="e.g. https://example.com/logo.png"
-              className="w-full border rounded-xl py-3 px-4 outline-none focus:ring-2 focus:ring-green-500"
+              className="w-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 rounded-xl py-3 px-4 outline-none focus:ring-2 focus:ring-emerald-500"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">Job Description *</label>
+            <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Job Description *</label>
             <textarea
               name="description"
               value={formData.description}
               onChange={handleChange}
               rows={5}
               placeholder="Detail the job roles and responsibilities..."
-              className="w-full border rounded-xl py-3 px-4 outline-none focus:ring-2 focus:ring-green-500"
+              className="w-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 rounded-xl py-3 px-4 outline-none focus:ring-2 focus:ring-emerald-500"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-2">Requirements (comma-separated)</label>
+            <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Requirements (comma-separated)</label>
             <input
               type="text"
               name="requirements"
               value={formData.requirements}
               onChange={handleChange}
               placeholder="e.g. React experience, REST APIs, Git flow"
-              className="w-full border rounded-xl py-3 px-4 outline-none focus:ring-2 focus:ring-green-500"
+              className="w-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 rounded-xl py-3 px-4 outline-none focus:ring-2 focus:ring-emerald-500"
             />
           </div>
 
-          <div className="flex gap-4 pt-4 border-t border-gray-200">
+          <div className="flex gap-4 pt-4 border-t border-slate-200 dark:border-slate-800">
             <button
               type="button"
               onClick={() => navigate("/company")}
-              className="flex-1 border border-gray-300 rounded-xl py-3 font-semibold text-gray-700 hover:bg-gray-50 transition cursor-pointer"
+              className="flex-1 border border-slate-300 dark:border-slate-700 rounded-xl py-3 font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition cursor-pointer"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={saving}
-              className="flex-1 bg-green-600 hover:bg-green-700 text-white rounded-xl py-3 font-semibold transition cursor-pointer"
+              className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl py-3 font-semibold transition cursor-pointer shadow-sm shadow-emerald-500/20"
             >
               {saving ? "Saving..." : isEditMode ? "Save Changes" : "Publish Job"}
             </button>

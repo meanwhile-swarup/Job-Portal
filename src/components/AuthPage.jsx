@@ -106,12 +106,12 @@ export default function AuthPage() {
   };
 
   return (
-    <div className="min-h-[calc(100vh-80px)] bg-slate-50/50 flex items-center justify-center p-6 relative overflow-hidden">
+    <div className="min-h-[calc(100vh-80px)] bg-slate-50/50 dark:bg-slate-950 flex items-center justify-center p-6 relative overflow-hidden transition-colors duration-300">
       {/* Background radial glows */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-violet-100 rounded-full blur-3xl opacity-30 pointer-events-none"></div>
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-emerald-100/40 rounded-full blur-3xl opacity-30 pointer-events-none"></div>
+      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-violet-100 dark:bg-violet-950/30 rounded-full blur-3xl opacity-30 pointer-events-none"></div>
+      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-emerald-100/40 dark:bg-emerald-950/30 rounded-full blur-3xl opacity-30 pointer-events-none"></div>
 
-      <div className="w-full max-w-4xl bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden grid md:grid-cols-2 relative z-10">
+      <div className="w-full max-w-4xl bg-white dark:bg-slate-900 rounded-3xl shadow-xl dark:shadow-slate-950/60 border border-slate-100 dark:border-slate-800 overflow-hidden grid md:grid-cols-2 relative z-10">
         
         {/* BRAND SIDE */}
         <div className="bg-gradient-to-br from-violet-600 via-violet-700 to-violet-800 p-10 flex flex-col justify-between text-white relative">
@@ -149,14 +149,14 @@ export default function AuthPage() {
         </div>
 
         {/* FORM SIDE */}
-        <div className="p-8 md:p-10 flex flex-col justify-center">
+        <div className="p-8 md:p-10 flex flex-col justify-center bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100">
           <div className="flex justify-center mb-8">
-            <div className="bg-slate-100 rounded-full p-1 flex gap-1 w-full max-w-[240px]">
+            <div className="bg-slate-100 dark:bg-slate-800 rounded-full p-1 flex gap-1 w-full max-w-[240px]">
               <button
                 type="button"
                 onClick={() => switchMode(true)}
                 className={`flex-1 text-center py-2 rounded-full cursor-pointer text-xs font-bold transition-all duration-200 ${
-                  isLogin && !isForgotPassword ? "bg-white text-slate-800 shadow-sm" : "text-slate-500 hover:text-slate-700"
+                  isLogin && !isForgotPassword ? "bg-white dark:bg-slate-700 text-slate-800 dark:text-white shadow-sm" : "text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200"
                 }`}
               >
                 Sign In
@@ -166,7 +166,7 @@ export default function AuthPage() {
                 type="button"
                 onClick={() => switchMode(false)}
                 className={`flex-1 text-center py-2 rounded-full cursor-pointer text-xs font-bold transition-all duration-200 ${
-                  !isLogin ? "bg-white text-slate-800 shadow-sm" : "text-slate-500 hover:text-slate-700"
+                  !isLogin ? "bg-white dark:bg-slate-700 text-slate-800 dark:text-white shadow-sm" : "text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200"
                 }`}
               >
                 Register

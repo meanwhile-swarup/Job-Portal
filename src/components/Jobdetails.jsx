@@ -85,14 +85,14 @@ const Jobdetails = () => {
   }
 
   return (
-    <section className="min-h-[calc(100vh-80px)] bg-slate-50/30 px-6 lg:px-24 py-12">
+    <section className="min-h-[calc(100vh-80px)] bg-slate-50/30 dark:bg-slate-950 px-6 lg:px-24 py-12 transition-colors duration-300">
       <div className="max-w-5xl mx-auto flex flex-col lg:flex-row gap-8 items-start">
         
         {/* Main Content Area */}
-        <div className="flex-1 bg-white rounded-3xl border border-slate-100 p-8 shadow-sm">
+        <div className="flex-1 bg-white dark:bg-slate-900 rounded-3xl border border-slate-100 dark:border-slate-800 p-8 shadow-sm">
           {/* Header section */}
-          <div className="flex items-start gap-5 pb-8 border-b border-slate-100">
-            <div className="w-16 h-16 bg-violet-50 rounded-2xl flex items-center justify-center overflow-hidden shrink-0 border border-violet-100/50">
+          <div className="flex items-start gap-5 pb-8 border-b border-slate-100 dark:border-slate-800">
+            <div className="w-16 h-16 bg-violet-50 dark:bg-slate-800 rounded-2xl flex items-center justify-center overflow-hidden shrink-0 border border-violet-100/50 dark:border-slate-700">
               {job.logo_url ? (
                 <img
                   src={job.logo_url}
@@ -100,13 +100,13 @@ const Jobdetails = () => {
                   className="w-full h-full object-cover"
                 />
               ) : (
-                <span className="text-2xl font-black text-violet-600">
+                <span className="text-2xl font-black text-violet-600 dark:text-violet-400">
                   {job.company?.[0]}
                 </span>
               )}
             </div>
             <div>
-              <h1 className="text-2xl lg:text-3xl font-extrabold tracking-tight text-slate-800">
+              <h1 className="text-2xl lg:text-3xl font-extrabold tracking-tight text-slate-800 dark:text-white">
                 {job.title}
               </h1>
               <p 
@@ -115,29 +115,29 @@ const Jobdetails = () => {
                     navigate(`/profiles/company/${job.company_id}`);
                   }
                 }}
-                className="text-violet-600 font-bold mt-1.5 hover:underline cursor-pointer transition text-sm flex items-center gap-1.5"
+                className="text-violet-600 dark:text-violet-400 font-bold mt-1.5 hover:underline cursor-pointer transition text-sm flex items-center gap-1.5"
                 title="Click to view company profile"
               >
                 <span>{job.company}</span>
-                <span className="text-[10px] bg-slate-100 text-slate-500 font-bold px-2 py-0.5 rounded-full no-underline hover:no-underline">Company</span>
+                <span className="text-[10px] bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 font-bold px-2 py-0.5 rounded-full no-underline hover:no-underline">Company</span>
               </p>
             </div>
           </div>
 
           {/* Description */}
           <div className="mt-8">
-            <h2 className="text-lg font-bold text-slate-800">Job Description</h2>
-            <p className="text-slate-500 leading-relaxed mt-3 whitespace-pre-wrap text-sm">{job.description}</p>
+            <h2 className="text-lg font-bold text-slate-800 dark:text-white">Job Description</h2>
+            <p className="text-slate-500 dark:text-slate-300 leading-relaxed mt-3 whitespace-pre-wrap text-sm">{job.description}</p>
           </div>
 
           {/* Requirements */}
           {job.requirements && job.requirements.length > 0 && (
-            <div className="mt-8 border-t border-slate-100 pt-8">
-              <h2 className="text-lg font-bold text-slate-800">Requirements</h2>
-              <ul className="text-slate-500 mt-4 space-y-3 text-sm">
+            <div className="mt-8 border-t border-slate-100 dark:border-slate-800 pt-8">
+              <h2 className="text-lg font-bold text-slate-800 dark:text-white">Requirements</h2>
+              <ul className="text-slate-500 dark:text-slate-300 mt-4 space-y-3 text-sm">
                 {job.requirements.map((req, index) => (
                   <li key={index} className="flex items-start gap-2.5">
-                    <span className="text-emerald-500 font-bold select-none mt-0.5">✓</span>
+                    <span className="text-emerald-500 dark:text-emerald-400 font-bold select-none mt-0.5">✓</span>
                     <span>{req}</span>
                   </li>
                 ))}
@@ -146,9 +146,9 @@ const Jobdetails = () => {
           )}
 
           {/* About Role */}
-          <div className="mt-8 border-t border-slate-100 pt-8">
-            <h2 className="text-lg font-bold text-slate-800">About This Role</h2>
-            <p className="text-slate-500 leading-relaxed mt-3 text-sm">
+          <div className="mt-8 border-t border-slate-100 dark:border-slate-800 pt-8">
+            <h2 className="text-lg font-bold text-slate-800 dark:text-white">About This Role</h2>
+            <p className="text-slate-500 dark:text-slate-300 leading-relaxed mt-3 text-sm">
               Join {job.company} and work on exciting projects using modern
               technologies. This role provides opportunities to learn, grow,
               and contribute to impactful industry solutions. We are looking for
@@ -158,24 +158,24 @@ const Jobdetails = () => {
         </div>
 
         {/* Sidebar Info Card */}
-        <div className="w-full lg:w-80 shrink-0 bg-white rounded-3xl border border-slate-100 p-6 shadow-sm sticky top-24">
-          <h3 className="text-sm font-bold text-slate-800 uppercase tracking-wider mb-4">Job Overview</h3>
+        <div className="w-full lg:w-80 shrink-0 bg-white dark:bg-slate-900 rounded-3xl border border-slate-100 dark:border-slate-800 p-6 shadow-sm sticky top-24">
+          <h3 className="text-sm font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wider mb-4">Job Overview</h3>
           
           <div className="space-y-4">
-            <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100/50">
-              <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Salary Range</p>
-              <p className="font-extrabold text-slate-800 mt-1 text-base">{job.salary || "Not Specified"}</p>
+            <div className="p-4 bg-slate-50 dark:bg-slate-800/60 rounded-2xl border border-slate-100/50 dark:border-slate-800">
+              <p className="text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider">Salary Range</p>
+              <p className="font-extrabold text-slate-800 dark:text-white mt-1 text-base">{job.salary || "Not Specified"}</p>
             </div>
 
-            <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100/50">
-              <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Location</p>
-              <p className="font-extrabold text-slate-800 mt-1 text-sm">{job.location}</p>
+            <div className="p-4 bg-slate-50 dark:bg-slate-800/60 rounded-2xl border border-slate-100/50 dark:border-slate-800">
+              <p className="text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider">Location</p>
+              <p className="font-extrabold text-slate-800 dark:text-white mt-1 text-sm">{job.location}</p>
             </div>
           </div>
 
-          <div className="mt-6 pt-6 border-t border-slate-100">
+          <div className="mt-6 pt-6 border-t border-slate-100 dark:border-slate-800">
             {user?.user_metadata?.role === "company" ? (
-              <div className="text-center p-3 bg-slate-50 border border-slate-100 rounded-xl text-xs font-semibold text-slate-500">
+              <div className="text-center p-3 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-xl text-xs font-semibold text-slate-500 dark:text-slate-400">
                 Viewing as Employer
               </div>
             ) : (
@@ -184,7 +184,7 @@ const Jobdetails = () => {
                 disabled={applied}
                 className={`w-full py-3.5 rounded-xl text-sm font-bold transition-all duration-200 cursor-pointer text-center ${
                   applied
-                    ? "bg-slate-100 text-slate-400 cursor-not-allowed border border-slate-100"
+                    ? "bg-slate-100 dark:bg-slate-800 text-slate-400 dark:text-slate-500 cursor-not-allowed border border-slate-100 dark:border-slate-800"
                     : "bg-violet-600 hover:bg-violet-700 text-white shadow-md hover:shadow-lg hover:shadow-violet-500/10 active:scale-98"
                 }`}
               >

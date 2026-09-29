@@ -90,57 +90,57 @@ const ManageApplicants = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <p className="text-gray-600 text-lg">Loading applicants...</p>
+      <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
+        <p className="text-slate-600 dark:text-slate-400 text-lg">Loading applicants...</p>
       </div>
     );
   }
 
   return (
-    <section className="min-h-screen bg-gray-50 px-6 lg:px-20 py-16">
+    <section className="min-h-screen bg-slate-50 dark:bg-slate-950 px-6 lg:px-20 py-16 transition-colors duration-300">
       <div className="max-w-4xl mx-auto">
         <button
           onClick={() => navigate("/company")}
-          className="text-gray-500 hover:text-gray-700 font-medium mb-6 flex items-center gap-1 cursor-pointer"
+          className="text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 font-medium mb-6 flex items-center gap-1 cursor-pointer"
         >
           ← Back to Dashboard
         </button>
 
-        <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm mb-8">
-          <h1 className="text-2xl font-bold text-gray-900">{job?.title}</h1>
-          <p className="text-sm text-green-600 font-semibold mt-1">{job?.company} • {job?.location}</p>
+        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm mb-8">
+          <h1 className="text-2xl font-bold text-slate-900 dark:text-white">{job?.title}</h1>
+          <p className="text-sm text-emerald-600 dark:text-emerald-400 font-semibold mt-1">{job?.company} • {job?.location}</p>
         </div>
 
-        <h2 className="text-xl font-bold text-gray-900 mb-4">Candidates ({applicants.length})</h2>
+        <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-4">Candidates ({applicants.length})</h2>
 
         {applicants.length === 0 ? (
-          <div className="bg-white border border-gray-200 rounded-2xl p-10 text-center shadow-sm">
-            <p className="text-gray-500">No candidates have applied for this position yet.</p>
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-10 text-center shadow-sm">
+            <p className="text-slate-500 dark:text-slate-400">No candidates have applied for this position yet.</p>
           </div>
         ) : (
           <div className="space-y-4">
             {applicants.map((app) => (
               <div
                 key={app.id}
-                className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col gap-4"
+                className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col gap-4"
               >
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-green-100 text-green-700 rounded-full flex items-center justify-center font-bold text-lg shrink-0">
+                    <div className="w-12 h-12 bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800/60 rounded-full flex items-center justify-center font-bold text-lg shrink-0">
                       {(app.applicant_name || app.applicant_email || app.user_id).substring(0, 2).toUpperCase()}
                     </div>
                     <div>
                       <div 
                         onClick={() => navigate(`/profiles/seeker/${app.user_id}`)}
-                        className="font-bold text-gray-900 hover:text-green-700 hover:underline cursor-pointer transition text-base"
+                        className="font-bold text-slate-900 dark:text-white hover:text-emerald-600 dark:hover:text-emerald-400 hover:underline cursor-pointer transition text-base"
                         title="Click to view candidate profile"
                       >
                         {app.applicant_name || `Candidate #${app.user_id.substring(0, 6)}`}
                       </div>
                       {app.applicant_email && (
-                        <div className="text-sm text-gray-500">{app.applicant_email}</div>
+                        <div className="text-sm text-slate-500 dark:text-slate-400">{app.applicant_email}</div>
                       )}
-                      <div className="text-xs text-gray-400 mt-1">
+                      <div className="text-xs text-slate-400 dark:text-slate-500 mt-1">
                         Applied on: {new Date(app.applied_at).toLocaleDateString()}
                       </div>
                     </div>
@@ -150,10 +150,10 @@ const ManageApplicants = () => {
                     <span
                       className={`text-xs px-3 py-1.5 rounded-full font-medium ${
                         app.status === "Accepted"
-                          ? "bg-green-100 text-green-700"
+                          ? "bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800"
                           : app.status === "Rejected"
-                          ? "bg-red-100 text-red-700"
-                          : "bg-yellow-100 text-yellow-700"
+                          ? "bg-red-100 dark:bg-red-950 text-red-700 dark:text-red-400 border border-red-200 dark:border-red-800"
+                          : "bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-800"
                       }`}
                     >
                       {app.status || "Pending"}
@@ -163,7 +163,7 @@ const ManageApplicants = () => {
                       <div className="flex gap-2">
                         <button
                           onClick={() => handleUpdateStatus(app.id, "Accepted")}
-                          className="bg-green-600 hover:bg-green-700 text-white px-3 py-1.5 rounded-lg text-xs font-semibold transition cursor-pointer"
+                          className="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-lg text-xs font-semibold transition cursor-pointer"
                         >
                           Accept
                         </button>
@@ -183,15 +183,15 @@ const ManageApplicants = () => {
                   const { profile, message } = parseCoverMessage(app.cover_message);
                   return (
                     (message || profile || app.resume_url || app.github_url || app.linkedin_url) && (
-                      <div className="border-t border-gray-100 pt-4 mt-2 space-y-3">
+                      <div className="border-t border-slate-100 dark:border-slate-800 pt-4 mt-2 space-y-3">
                         {profile && (
-                          <div className="bg-green-50/50 border border-green-100 p-3.5 rounded-xl">
-                            <span className="text-xs font-semibold text-green-800 block mb-1">Candidate Profile Summary:</span>
-                            <div className="text-sm font-bold text-gray-900 mb-1">{profile.title}</div>
+                          <div className="bg-emerald-50/50 dark:bg-emerald-950/30 border border-emerald-100 dark:border-emerald-900/40 p-3.5 rounded-xl">
+                            <span className="text-xs font-semibold text-emerald-800 dark:text-emerald-400 block mb-1">Candidate Profile Summary:</span>
+                            <div className="text-sm font-bold text-slate-900 dark:text-white mb-1">{profile.title}</div>
                             {profile.skills && (
                               <div className="flex flex-wrap gap-1.5 mt-2">
                                 {profile.skills.split(",").map((s, idx) => (
-                                  <span key={idx} className="bg-white text-green-700 border border-green-150 px-2 py-0.5 rounded-md text-xs font-medium">
+                                  <span key={idx} className="bg-white dark:bg-slate-800 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-700 px-2 py-0.5 rounded-md text-xs font-medium">
                                     {s.trim()}
                                   </span>
                                 ))}
@@ -202,8 +202,8 @@ const ManageApplicants = () => {
 
                         {message && (
                           <div>
-                            <span className="text-xs font-semibold text-gray-500 block mb-1">Cover Message:</span>
-                            <p className="text-sm text-gray-700 leading-relaxed bg-gray-50 p-3.5 rounded-xl whitespace-pre-wrap">
+                            <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 block mb-1">Cover Message:</span>
+                            <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed bg-slate-50 dark:bg-slate-800/60 p-3.5 rounded-xl whitespace-pre-wrap">
                               {message}
                             </p>
                           </div>
@@ -215,7 +215,7 @@ const ManageApplicants = () => {
                           href={app.resume_url.startsWith("http") ? app.resume_url : `https://${app.resume_url}`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1.5 text-xs font-semibold bg-blue-50 text-blue-700 px-3 py-1.5 rounded-lg hover:bg-blue-100 transition"
+                          className="inline-flex items-center gap-1.5 text-xs font-semibold bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-400 px-3 py-1.5 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900/60 transition"
                         >
                           <FaFileAlt /> Resume
                         </a>
@@ -225,7 +225,7 @@ const ManageApplicants = () => {
                           href={app.github_url.startsWith("http") ? app.github_url : `https://${app.github_url}`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1.5 text-xs font-semibold bg-gray-100 text-gray-800 px-3 py-1.5 rounded-lg hover:bg-gray-200 transition"
+                          className="inline-flex items-center gap-1.5 text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 px-3 py-1.5 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 transition"
                         >
                           <FaGithub /> GitHub
                         </a>
@@ -235,7 +235,7 @@ const ManageApplicants = () => {
                           href={app.linkedin_url.startsWith("http") ? app.linkedin_url : `https://${app.linkedin_url}`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1.5 text-xs font-semibold bg-sky-50 text-sky-700 px-3 py-1.5 rounded-lg hover:bg-sky-100 transition"
+                          className="inline-flex items-center gap-1.5 text-xs font-semibold bg-sky-50 dark:bg-sky-950/60 text-sky-700 dark:text-sky-400 px-3 py-1.5 rounded-lg hover:bg-sky-100 dark:hover:bg-sky-900/60 transition"
                         >
                           <FaLinkedin /> LinkedIn
                         </a>
