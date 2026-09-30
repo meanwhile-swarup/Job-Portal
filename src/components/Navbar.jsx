@@ -15,7 +15,10 @@ const Navbar = () => {
     ...(user && user.user_metadata?.role === "company"
       ? [{ name: "Dashboard", path: "/company" }]
       : user
-        ? [{ name: "Applied Jobs", path: "/applied" }]
+        ? [
+            { name: "Applied Jobs", path: "/applied" },
+            { name: "Saved Jobs", path: "/saved" },
+          ]
         : []),
     ...(user ? [{ name: "Profile", path: "/profile" }] : []),
   ];

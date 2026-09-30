@@ -13,6 +13,8 @@ const Jobdetails = () => {
   const [job, setJob] = useState(null);
   const [loadingJob, setLoadingJob] = useState(true);
   const [applied, setApplied] = useState(false);
+  const [savedRecordId, setSavedRecordId] = useState(null);
+  const [savingBookmark, setSavingBookmark] = useState(false);
   const [isApplyModalOpen, setIsApplyModalOpen] = useState(false);
 
   useEffect(() => {
@@ -53,6 +55,20 @@ const Jobdetails = () => {
     }
   }, [user, id]);
 
+  useEffect(() => {
+    if (!user || !id || user?.user_metadata?.role === "company") return;
+    const checkSaved = async () => {
+      const { data } = await supabase
+        .from("saved_jobs")
+        .select("id")
+        .eq("user_id", user.id)
+        .eq("job_id", Number(id))
+        .maybeSingle();
+      if (data) setSavedRecordId(data.id);
+    };
+    checkSaved();
+  }, [user, id]);
+
   const handleApplyClick = () => {
     if (!user) {
       addToast("Please login to apply for this job.", "warning");
@@ -60,6 +76,40 @@ const Jobdetails = () => {
       return;
     }
     setIsApplyModalOpen(true);
+  };
+
+  const handleToggleSave = async () => {
+    if (!user) {
+      addToast("Please login to save jobs.", "warning");
+      navigate("/auth");
+      return;
+    }
+    setSavingBookmark(true);
+    try {
+      if (savedRecordId) {
+        const { error } = await supabase
+          .from("saved_jobs")
+          .delete()
+          .eq("id", savedRecordId)
+          .eq("user_id", user.id);
+        if (error) throw error;
+        setSavedRecordId(null);
+        addToast(`Removed "${job?.title}" from saved jobs.`, "success");
+      } else {
+        const { data, error } = await supabase
+          .from("saved_jobs")
+          .insert({ user_id: user.id, job_id: Number(id) })
+          .select("id")
+          .single();
+        if (error) throw error;
+        setSavedRecordId(data.id);
+        addToast(`"${job?.title}" saved! View in Saved Jobs.`, "success");
+      }
+    } catch (err) {
+      addToast(err.message || "Error updating saved job.", "error");
+    } finally {
+      setSavingBookmark(false);
+    }
   };
 
   if (loadingJob) {
@@ -179,17 +229,40 @@ const Jobdetails = () => {
                 Viewing as Employer
               </div>
             ) : (
-              <button
-                onClick={handleApplyClick}
-                disabled={applied}
-                className={`w-full py-3.5 rounded-xl text-sm font-bold transition-all duration-200 cursor-pointer text-center ${
-                  applied
-                    ? "bg-slate-100 dark:bg-slate-800 text-slate-400 dark:text-slate-500 cursor-not-allowed border border-slate-100 dark:border-slate-800"
-                    : "bg-violet-600 hover:bg-violet-700 text-white shadow-md hover:shadow-lg hover:shadow-violet-500/10 active:scale-98"
-                }`}
-              >
-                {applied ? "Already Applied" : "Apply For Job"}
-              </button>
+              <div className="flex flex-col gap-3">
+                <button
+                  onClick={handleApplyClick}
+                  disabled={applied}
+                  className={`w-full py-3.5 rounded-xl text-sm font-bold transition-all duration-200 cursor-pointer text-center ${
+                    applied
+                      ? "bg-slate-100 dark:bg-slate-800 text-slate-400 dark:text-slate-500 cursor-not-allowed border border-slate-100 dark:border-slate-800"
+                      : "bg-violet-600 hover:bg-violet-700 text-white shadow-md hover:shadow-lg hover:shadow-violet-500/10 active:scale-98"
+                  }`}
+                >
+                  {applied ? "Already Applied" : "Apply For Job"}
+                </button>
+                {/* Bookmark / Save button */}
+                <button
+                  onClick={handleToggleSave}
+                  disabled={savingBookmark}
+                  className={`w-full py-3 rounded-xl text-sm font-bold transition-all duration-200 cursor-pointer flex items-center justify-center gap-2 border ${
+                    savedRecordId
+                      ? "border-amber-300 dark:border-amber-600 bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400"
+                      : "border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:border-amber-300 dark:hover:border-amber-600 hover:bg-amber-50 dark:hover:bg-amber-950/30 hover:text-amber-600 dark:hover:text-amber-400"
+                  } disabled:opacity-50`}
+                >
+                  <svg
+                    className={`w-4 h-4 transition-all duration-200 ${savingBookmark ? "animate-pulse" : ""}`}
+                    fill={savedRecordId ? "currentColor" : "none"}
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z" />
+                  </svg>
+                  {savedRecordId ? "Saved" : "Save Job"}
+                </button>
+              </div>
             )}
           </div>
         </div>

@@ -15,6 +15,7 @@ import NotFound from './components/NotFound'
 import ProtectedRoute from './components/ProtectedRoute'
 import Profile from './components/Profile'
 import PublicProfile from './components/PublicProfile'
+import SavedJobs from './components/SavedJobs'
 
 
 
@@ -43,6 +44,12 @@ const App = () => {
           <Route path="/applied" element={
             <ProtectedRoute allowedRole="seeker">
               <AppliedJobs />
+            </ProtectedRoute>
+          } />
+
+          <Route path="/saved" element={
+            <ProtectedRoute allowedRole="seeker">
+              <SavedJobs />
             </ProtectedRoute>
           } />
 

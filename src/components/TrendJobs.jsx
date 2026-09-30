@@ -11,6 +11,8 @@ const Trends = ({ title, location }) => {
   const { addToast } = useToast();
   const [jobs, setJobs] = useState([]);
   const [appliedJobIds, setAppliedJobIds] = useState(new Set());
+  const [savedJobIds, setSavedJobIds] = useState(new Set()); // map jobId -> savedRecordId
+  const [savingId, setSavingId] = useState(null);
   const [loadingJobs, setLoadingJobs] = useState(true);
 
   // Apply Modal state
@@ -55,6 +57,25 @@ const Trends = ({ title, location }) => {
     }
   }, [user]);
 
+  useEffect(() => {
+    if (!user) {
+      setSavedJobIds(new Set());
+      return;
+    }
+    const fetchSaved = async () => {
+      const { data } = await supabase
+        .from("saved_jobs")
+        .select("id, job_id")
+        .eq("user_id", user.id);
+      if (data) {
+        // Store as Map: jobId -> savedRecordId
+        const map = new Map(data.map((s) => [s.job_id, s.id]));
+        setSavedJobIds(map);
+      }
+    };
+    fetchSaved();
+  }, [user]);
+
   const handleApplyClick = (job) => {
     if (!user) {
       addToast("Please login to apply for this job.", "warning");
@@ -71,6 +92,52 @@ const Trends = ({ title, location }) => {
       updated.add(jobId);
       return updated;
     });
+  };
+
+  const handleToggleSave = async (job) => {
+    if (!user) {
+      addToast("Please login to save jobs.", "warning");
+      navigate("/auth");
+      return;
+    }
+    if (user?.user_metadata?.role === "company") return;
+    setSavingId(job.id);
+    try {
+      if (savedJobIds instanceof Map && savedJobIds.has(job.id)) {
+        // Unsave
+        const recordId = savedJobIds.get(job.id);
+        const { error } = await supabase
+          .from("saved_jobs")
+          .delete()
+          .eq("id", recordId)
+          .eq("user_id", user.id);
+        if (error) throw error;
+        setSavedJobIds((prev) => {
+          const next = new Map(prev);
+          next.delete(job.id);
+          return next;
+        });
+        addToast(`Removed "${job.title}" from saved jobs.`, "success");
+      } else {
+        // Save
+        const { data, error } = await supabase
+          .from("saved_jobs")
+          .insert({ user_id: user.id, job_id: job.id })
+          .select("id")
+          .single();
+        if (error) throw error;
+        setSavedJobIds((prev) => {
+          const next = new Map(prev);
+          next.set(job.id, data.id);
+          return next;
+        });
+        addToast(`"${job.title}" saved! View in Saved Jobs.`, "success");
+      }
+    } catch (err) {
+      addToast(err.message || "Error saving job.", "error");
+    } finally {
+      setSavingId(null);
+    }
   };
 
   const formatTimeAgo = (dateString) => {
@@ -130,6 +197,8 @@ const Trends = ({ title, location }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
           {filteredJobs.map((job) => {
             const isApplied = appliedJobIds.has(job.id);
+            const isSaved = savedJobIds instanceof Map && savedJobIds.has(job.id);
+            const isSaving = savingId === job.id;
             return (
               <div
                 key={job.id}
@@ -210,7 +279,25 @@ const Trends = ({ title, location }) => {
                   </div>
 
                   {/* Buttons */}
-                  <div className="flex gap-2.5 items-center w-full">
+                  <div className="flex gap-2 items-center w-full">
+                    {/* Bookmark Button — seekers only */}
+                    {user?.user_metadata?.role !== "company" && (
+                      <button
+                        onClick={() => handleToggleSave(job)}
+                        disabled={isSaving}
+                        title={isSaved ? "Remove from saved" : "Save this job"}
+                        className={`p-2 rounded-xl border transition-all duration-200 cursor-pointer shrink-0 disabled:opacity-50 ${
+                          isSaved
+                            ? "border-amber-300 dark:border-amber-600 bg-amber-50 dark:bg-amber-950/40 text-amber-500 dark:text-amber-400"
+                            : "border-slate-200/80 dark:border-slate-700/80 text-slate-400 dark:text-slate-500 hover:border-amber-300 dark:hover:border-amber-600 hover:bg-amber-50 dark:hover:bg-amber-950/40 hover:text-amber-500 dark:hover:text-amber-400"
+                        }`}
+                      >
+                        <svg className={`w-3.5 h-3.5 transition-transform duration-200 ${isSaving ? "animate-pulse" : ""}`} fill={isSaved ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z" />
+                        </svg>
+                      </button>
+                    )}
+
                     {user?.user_metadata?.role !== "company" && (
                       <button
                         onClick={() => handleApplyClick(job)}
