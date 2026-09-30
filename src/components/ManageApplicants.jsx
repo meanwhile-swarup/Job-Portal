@@ -71,7 +71,7 @@ const ManageApplicants = () => {
     fetchData();
   }, [jobId, user, navigate]);
 
-  const handleUpdateStatus = async (appId, newStatus) => {
+  const handleUpdateStatus = async (appId, newStatus, applicantUserId) => {
     try {
       const { error } = await supabase
         .from("applications")
@@ -83,6 +83,22 @@ const ManageApplicants = () => {
         prev.map((app) => (app.id === appId ? { ...app, status: newStatus } : app))
       );
       addToast(`Application ${newStatus.toLowerCase()} successfully!`, "success");
+
+      // Notify the seeker about the status change
+      try {
+        if (applicantUserId && job) {
+          await supabase.from("notifications").insert({
+            user_id: applicantUserId,
+            type: "status_update",
+            message: `Your application for "${job.title}" at ${job.company} has been updated.`,
+            link: "/applied",
+            metadata: { status: newStatus, job_id: job.id },
+            is_read: false,
+          });
+        }
+      } catch (_) {
+        // Notification failure should not block status update
+      }
     } catch (err) {
       addToast(err.message || "Failed to update status.", "error");
     }
@@ -162,13 +178,13 @@ const ManageApplicants = () => {
                     {(!app.status || app.status === "Pending") && (
                       <div className="flex gap-2">
                         <button
-                          onClick={() => handleUpdateStatus(app.id, "Accepted")}
+                          onClick={() => handleUpdateStatus(app.id, "Accepted", app.user_id)}
                           className="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-lg text-xs font-semibold transition cursor-pointer"
                         >
                           Accept
                         </button>
                         <button
-                          onClick={() => handleUpdateStatus(app.id, "Rejected")}
+                          onClick={() => handleUpdateStatus(app.id, "Rejected", app.user_id)}
                           className="bg-red-600 hover:bg-red-700 text-white px-3 py-1.5 rounded-lg text-xs font-semibold transition cursor-pointer"
                         >
                           Reject

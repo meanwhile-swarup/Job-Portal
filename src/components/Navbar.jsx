@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useTheme } from "../context/ThemeContext";
 import { FaBars, FaTimes, FaBriefcase, FaSun, FaMoon } from "react-icons/fa";
+import NotificationBell from "./NotificationBell";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -70,6 +71,8 @@ const Navbar = () => {
               {isDarkMode ? <FaSun className="text-base" /> : <FaMoon className="text-base" />}
             </button>
 
+            {user && <NotificationBell />}
+
             {user ? (
               <>
                 <span className="text-slate-500 dark:text-slate-400 text-sm font-medium">{user?.user_metadata?.display_name || user?.email}</span>
@@ -108,6 +111,7 @@ const Navbar = () => {
           >
             {isDarkMode ? <FaSun className="text-base" /> : <FaMoon className="text-base" />}
           </button>
+          {user && <NotificationBell />}
           <div className="text-xl cursor-pointer text-slate-700 dark:text-slate-200" onClick={() => setIsOpen(!isOpen)}>
             {isOpen ? <FaTimes /> : <FaBars />}
           </div>

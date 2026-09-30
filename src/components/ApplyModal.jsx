@@ -68,6 +68,28 @@ const ApplyModal = ({ isOpen, onClose, jobId, jobTitle, companyName, onSuccess }
         }]);
 
       if (error) throw error;
+
+      // Notify the company about the new application
+      try {
+        const { data: jobData } = await supabase
+          .from("jobs")
+          .select("company_id, title, company")
+          .eq("id", jobId)
+          .single();
+
+        if (jobData?.company_id) {
+          await supabase.from("notifications").insert({
+            user_id: jobData.company_id,
+            type: "new_application",
+            message: `${user.user_metadata?.display_name || user.email?.split("@")[0] || "Someone"} applied for "${jobTitle}"`,
+            link: `/company/jobs/${jobId}/applicants`,
+            metadata: { job_id: jobId, applicant_id: user.id },
+            is_read: false,
+          });
+        }
+      } catch (_) {
+        // Notification failure should not block application submission
+      }
       
       addToast("Application submitted successfully!", "success");
       if (onSuccess) onSuccess();
