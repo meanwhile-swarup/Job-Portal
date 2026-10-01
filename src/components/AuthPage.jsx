@@ -176,8 +176,8 @@ export default function AuthPage() {
 
           {verificationRequired ? (
             <div className="text-center py-6">
-              <h2 className="text-xl font-bold text-slate-800 mb-4">Verify your email</h2>
-              <div className="bg-violet-50 border border-violet-100 text-violet-800 p-4 rounded-2xl text-xs leading-relaxed mb-6">
+              <h2 className="text-xl font-bold text-slate-800 dark:text-slate-100 mb-4">Verify your email</h2>
+              <div className="bg-violet-50 dark:bg-violet-950/40 border border-violet-100 dark:border-violet-800 text-violet-800 dark:text-violet-200 p-4 rounded-2xl text-xs leading-relaxed mb-6">
                 We've sent a verification link to <strong className="font-semibold">{formData.email}</strong>. Please check your inbox and click the link to activate your account.
               </div>
               <button
@@ -189,14 +189,14 @@ export default function AuthPage() {
             </div>
           ) : isForgotPassword ? (
             <div>
-              <h2 className="text-xl font-bold text-slate-800 text-center">Reset Password</h2>
-              <p className="text-center text-slate-400 text-xs mt-1.5 mb-6">
+              <h2 className="text-xl font-bold text-slate-800 dark:text-slate-100 text-center">Reset Password</h2>
+              <p className="text-center text-slate-400 dark:text-slate-500 text-xs mt-1.5 mb-6">
                 Enter your email address and we'll send you a link to reset your password.
               </p>
 
               {resetSent ? (
                 <div className="text-center py-4">
-                  <div className="bg-emerald-50 border border-emerald-100 text-emerald-800 p-4 rounded-2xl text-xs mb-6">
+                  <div className="bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-100 dark:border-emerald-800 text-emerald-800 dark:text-emerald-200 p-4 rounded-2xl text-xs mb-6">
                     A password reset link has been sent to your email address.
                   </div>
                   <button
@@ -216,7 +216,7 @@ export default function AuthPage() {
                       value={formData.email}
                       placeholder="Email address"
                       type="email"
-                      className="w-full border border-slate-200 rounded-xl py-3.5 pl-11 pr-4 outline-none text-slate-800 placeholder-slate-400 text-sm font-medium focus:border-violet-500 focus:ring-2 focus:ring-violet-500/10 transition-all duration-200"
+                      className="w-full border border-slate-200 dark:border-slate-700 rounded-xl py-3.5 pl-11 pr-4 outline-none text-slate-800 dark:text-slate-100 bg-white dark:bg-slate-800 placeholder-slate-400 dark:placeholder-slate-500 text-sm font-medium focus:border-violet-500 focus:ring-2 focus:ring-violet-500/10 transition-all duration-200"
                     />
                   </div>
 
@@ -241,11 +241,11 @@ export default function AuthPage() {
             </div>
           ) : (
             <div>
-              <h2 className="text-xl font-bold text-slate-800 text-center">
+              <h2 className="text-xl font-bold text-slate-800 dark:text-slate-100 text-center">
                 {isLogin ? "Welcome Back" : "Create Account"}
               </h2>
 
-              <p className="text-center text-slate-400 text-xs mt-1.5 mb-6">
+              <p className="text-center text-slate-400 dark:text-slate-500 text-xs mt-1.5 mb-6">
                 {isLogin ? "Login to continue to SkillGig" : "Join the professional network today"}
               </p>
 
@@ -259,17 +259,17 @@ export default function AuthPage() {
                         value={formData.name}
                         onChange={handleChange}
                         placeholder="Full name"
-                        className="w-full border border-slate-200 rounded-xl py-3.5 pl-11 pr-4 outline-none text-slate-800 placeholder-slate-400 text-sm font-medium focus:border-violet-500 focus:ring-2 focus:ring-violet-500/10 transition-all duration-200"
+                        className="w-full border border-slate-200 dark:border-slate-700 rounded-xl py-3.5 pl-11 pr-4 outline-none text-slate-800 dark:text-slate-100 bg-white dark:bg-slate-800 placeholder-slate-400 dark:placeholder-slate-500 text-sm font-medium focus:border-violet-500 focus:ring-2 focus:ring-violet-500/10 transition-all duration-200"
                       />
                     </div>
 
                     <div className="space-y-1.5">
-                      <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider">I want to register as:</label>
+                      <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">I want to register as:</label>
                       <select
                         name="role"
                         value={formData.role}
                         onChange={handleChange}
-                        className="w-full border border-slate-200 rounded-xl py-3.5 px-4 bg-white outline-none text-slate-700 text-sm font-semibold focus:border-violet-500 focus:ring-2 focus:ring-violet-500/10 transition-all duration-200"
+                        className="w-full border border-slate-200 dark:border-slate-700 rounded-xl py-3.5 px-4 bg-white dark:bg-slate-800 outline-none text-slate-700 dark:text-slate-100 text-sm font-semibold focus:border-violet-500 focus:ring-2 focus:ring-violet-500/10 transition-all duration-200"
                       >
                         <option value="seeker">Job Seeker</option>
                         <option value="company">Employer / Company</option>
@@ -286,7 +286,7 @@ export default function AuthPage() {
                     value={formData.email}
                     placeholder="Email address"
                     type="email"
-                    className="w-full border border-slate-200 rounded-xl py-3.5 pl-11 pr-4 outline-none text-slate-800 placeholder-slate-400 text-sm font-medium focus:border-violet-500 focus:ring-2 focus:ring-violet-500/10 transition-all duration-200"
+                    className="w-full border border-slate-200 dark:border-slate-700 rounded-xl py-3.5 pl-11 pr-4 outline-none text-slate-800 dark:text-slate-100 bg-white dark:bg-slate-800 placeholder-slate-400 dark:placeholder-slate-500 text-sm font-medium focus:border-violet-500 focus:ring-2 focus:ring-violet-500/10 transition-all duration-200"
                   />
                 </div>
 
@@ -298,7 +298,7 @@ export default function AuthPage() {
                     onChange={handleChange}
                     type={showPassword ? "text" : "password"}
                     placeholder="Password"
-                    className="w-full border border-slate-200 rounded-xl py-3.5 pl-11 pr-11 outline-none text-slate-800 placeholder-slate-400 text-sm font-medium focus:border-violet-500 focus:ring-2 focus:ring-violet-500/10 transition-all duration-200"
+                    className="w-full border border-slate-200 dark:border-slate-700 rounded-xl py-3.5 pl-11 pr-11 outline-none text-slate-800 dark:text-slate-100 bg-white dark:bg-slate-800 placeholder-slate-400 dark:placeholder-slate-500 text-sm font-medium focus:border-violet-500 focus:ring-2 focus:ring-violet-500/10 transition-all duration-200"
                   />
 
                   <button
@@ -330,17 +330,17 @@ export default function AuthPage() {
                 </button>
 
                 {isLogin && (
-                  <div className="mt-6 p-4.5 bg-slate-50 border border-slate-100 rounded-2xl text-[11px] text-slate-500 flex justify-center gap-6">
+                  <div className="mt-6 p-4.5 bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-700 rounded-2xl text-[11px] text-slate-500 dark:text-slate-400 flex justify-center gap-6">
                     <div className="text-center flex-1">
-                      <p className="font-bold text-slate-700 mb-0.5">Demo Seeker</p>
-                      <p className="font-mono text-slate-400 select-all">seeker@demo.com</p>
-                      <p className="font-mono text-slate-400 select-all">password123</p>
+                      <p className="font-bold text-slate-700 dark:text-slate-200 mb-0.5">Demo Seeker</p>
+                      <p className="font-mono text-slate-400 dark:text-slate-500 select-all">seeker@demo.com</p>
+                      <p className="font-mono text-slate-400 dark:text-slate-500 select-all">password123</p>
                     </div>
-                    <div className="border-l border-slate-200"></div>
+                    <div className="border-l border-slate-200 dark:border-slate-700"></div>
                     <div className="text-center flex-1">
-                      <p className="font-bold text-slate-700 mb-0.5">Demo Company</p>
-                      <p className="font-mono text-slate-400 select-all">company@demo.com</p>
-                      <p className="font-mono text-slate-400 select-all">password123</p>
+                      <p className="font-bold text-slate-700 dark:text-slate-200 mb-0.5">Demo Company</p>
+                      <p className="font-mono text-slate-400 dark:text-slate-500 select-all">company@demo.com</p>
+                      <p className="font-mono text-slate-400 dark:text-slate-500 select-all">password123</p>
                     </div>
                   </div>
                 )}
