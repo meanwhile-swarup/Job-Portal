@@ -42,11 +42,20 @@ export default function AuthPage() {
       errors.push("Name is required.");
     }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!formData.email.trim()) {
+    const trimmedEmail = formData.email.trim();
+    // Strict email format check enforcing proper TLD (e.g. .com, .org, .io, .np, etc.)
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    
+    // Block obvious fake/placeholder domains like anc.xyz, test.com, etc.
+    const forbiddenDomains = ["anc.xyz", "test.com", "example.com", "fake.com", "temp.com", "mailinator.com"];
+    const emailDomain = trimmedEmail.split("@")[1]?.toLowerCase();
+
+    if (!trimmedEmail) {
       errors.push("Email is required");
-    } else if (!emailRegex.test(formData.email.trim())) {
+    } else if (!emailRegex.test(trimmedEmail)) {
       errors.push("Please enter a valid email address (e.g. name@domain.com)");
+    } else if (forbiddenDomains.includes(emailDomain)) {
+      errors.push("Please enter a valid email address");
     }
 
     if (!isForgotPassword) {
