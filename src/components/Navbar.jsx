@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useTheme } from "../context/ThemeContext";
-import { FaBars, FaTimes, FaBriefcase, FaSun, FaMoon } from "react-icons/fa";
+import { FaBars, FaTimes, FaSun, FaMoon } from "react-icons/fa";
 import NotificationBell from "./NotificationBell";
 
 const Navbar = () => {
@@ -37,9 +37,21 @@ const Navbar = () => {
           className="flex items-center gap-2 cursor-pointer"
           onClick={() => navigate("/")}
         >
-          <div className="w-8 h-8 rounded-lg bg-violet-600 flex items-center justify-center shadow-md shadow-violet-500/20">
-            <FaBriefcase className="text-white text-sm" />
-          </div>
+          {/* Custom SkillGig SVG Logo Mark */}
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" className="drop-shadow-md">
+            <defs>
+              <linearGradient id="sgGrad" x1="0" y1="0" x2="36" y2="36" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stopColor="#7c3aed" />
+                <stop offset="100%" stopColor="#4f46e5" />
+              </linearGradient>
+            </defs>
+            {/* Rounded square background */}
+            <rect width="36" height="36" rx="10" fill="url(#sgGrad)" />
+            {/* Lightning bolt shape */}
+            <path d="M20.5 5L11 19.5H18L15.5 31L25 16.5H18L20.5 5Z" fill="white" fillOpacity="0.95" />
+            {/* Small dot accent */}
+            <circle cx="28" cy="9" r="2.5" fill="#a78bfa" />
+          </svg>
           <span className="text-xl font-extrabold text-slate-900 dark:text-white tracking-tight">
             Skill<span className="text-violet-600 dark:text-violet-400">Gig</span>
           </span>
